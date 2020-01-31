@@ -21,7 +21,7 @@
 | *class variable* | variable with static keyword in initialization
 
 ### Java keywords
-| keywords |
+| keywords |||||
 |--|--|--|--|--|
 | abstract | assert | boolean | break | byte |
 | case | catch | char | class | const |
