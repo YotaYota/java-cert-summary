@@ -156,7 +156,7 @@ A value can be assigned to a reference in one of two ways
 Multiple variables can be declared and initialized in the same statement.
 Many variables can be **declared** in the same statement, provided they are of the same type (however, type is only allowed to be declared once for each statement). Any, or all of them can be **initialized** inline.
 
-Note: it is not allowed to *only* initialize multiple variables in the same statement. E.g.
+**Note**: it is not allowed to *only* initialize multiple variables in the same statement. E.g.
 ```java
 int x;
 int y;
@@ -194,7 +194,7 @@ Local variables must be initialized before used. Instance variables and class va
 | Field declarations | `int value;` | No | Anywhere inside a class |
 | Method declarations | `void method()` | No | Anywhere inside a class |
 
-Note: comments can go anywhere, even on first line before package.
+**Note**: comments can go anywhere, even on first line before package.
 
 ### Destroying Objects
 
@@ -233,7 +233,7 @@ Objects may implement `finalize()` which gets called when the garbage collector 
 
 ### Operators
 
-Three types: unary, binary, ternary.
+Three types: **unary**, **binary**, **ternary**.
 
 Order of operation (by decreasing order of operator precedence)
 
@@ -248,7 +248,7 @@ Order of operation (by decreasing order of operator precedence)
 | addition/subtraction | +, -
 | shift operators | <<, >>, >>>
 | relational operators | <, >, <=, >=, instanceof
-| equal to/not equal too | ==, !=
+| equal to/not equal to | ==, !=
 | logical operators | &, ^, \|| 
 | short-circuit logical operators | &&, \|\||
 | **ternary**
@@ -276,6 +276,13 @@ Numeric promotion rules:
 3. Smaller data types (`byte` , `short`, and `char`) are first promoted to `int` any time they are used in a binary arithmetic operator (even if neither of them are `int`).
 4. After all promotion has occurred and the operands have the same data type, the resulting value will have the same data type as its promoted operands.
 
+Example:
+```java
+short x = 1;
+short y = 1;
+short z = x*y; // DOES NOT COMPILE
+```
+
 #### Unary Operators
 One operand.
 `+`, `-`, `++`, `--`, `!`, `~`.
@@ -286,7 +293,7 @@ int x = !5; // Does not compile
 boolean y = -true; // Does not compile
 boolean z = !0; // Does not compile
 ```
-Note that, in Java *0* and *false*, *1* and *true* are not related in any way.
+**Note**: in Java *0* and *false*, *1* and *true* are not related in any way.
 
 For pre-unary operators, the value is decremented *before* it is returned. For post-unary operators, the value is incremented *after* it is returned. E.g.
 ```java
@@ -302,9 +309,9 @@ int y = ++x * 5 / x-- + --x; // Results in: x = 2, y = 7
 ```
 #### Ternary Operator
 
-There is only one in java: `? :`.
+There is only one in java, namely `? :`.
 `booleanExpression ? expression1 : expression2;`
-The first operand must an boolean expression. Second and third operands can be any expression that returns a value.
+The first operand must be a boolean expression, second and third operands can be any expression that returns a value.
 It is not required that second and third operand is of the same type, although it may come in to play when combined with the assignment operator.
 Only one of the right hand side operators will be evaluated at runtime, so side-effects might not be applied at runtime.
 
@@ -318,7 +325,7 @@ short y = (short) 1921222; // Stored as 20678 (numeric overflow)
 
 Numeric *overflow* is when the number is too large to be stored in the data type. There is also an *underflow* when the number is too low to fit in the data type.
 
-Compound assignment operators will automatically cast the resulting value into the type of the left-hand side, e.g.
+Compound assignment operators will *automatically* cast the resulting value into the type of the left-hand side, e.g.
 ```java
 long x = 10;
 int y = 5;
@@ -352,7 +359,7 @@ Truth table:
 | **TRUE** | true | false || true | true || false | true |
 | **FALSE** | false | false || true | false || true | false |
 
-Short-circuit operators, `&&` and `||`, does not evaluate right-hand side expression if the left-hand is enough.
+Short-circuit operators, `&&` and `||`, does not evaluate right-hand side expression if the left-hand is sufficient.
 
 #### Equality Operators
 Used in 1 of 3 scenarios:
@@ -393,7 +400,7 @@ For object comparison, the equality operator is applied to references to the obj
 - *for-each*
 	- right-hand side of the for-each loop statement must be a built in array or an object whose class implements *java.lang.Iterable*.
 
-Note: without braces only the next statement is evaluated.
+**Note**: if no bracers is used, only the next statement is evaluated.
 
 ### Understanding Advanced Flow Control
 A **label** is an optional pointer to the head of statement that allows the application flow to jump to it or break from it. It as a single word proceeded by a colon. Labels follow the same naming rules as for identifiers.
@@ -407,13 +414,15 @@ The **continue** statement transfers the flow of control to the boolean expressi
 ## Chapter 3: Core Java APIs
 
 _Mutable_ : an object that is changeable.
+
 _Immutable_ : an object that can't be changed once it's created. Immutable classes are final, and subclasses cannot add mutable behavior.
 
 ### Creating and Manipulating String
 
 _String_ is immutable.
-_StringBuilder_ is mutable. 
-`+` operator can be used in two ways within the same line of code. These are the 3 rules governing the `+` operator:
+_StringBuilder_ is mutable.
+
+The `+` operator can be used in two ways within the same line of code. These are the 3 rules governing the `+` operator:
 1. If both operands are numeric, + means numeric addition.
 2. If either operand is a String, + means concatenation.
 3. The expression is evaluated from left to right.
@@ -428,7 +437,7 @@ _object.toString()_ is a String but not a literal, hence does not go to the stri
 `new String("some string")` forces the String object to not be included in the string pool.
 
 ##### Important String methods
-Note: _length()_ gives length of String, but _indexOf()_ starts at 0.
+**Note**: _length()_ gives length of String, but _indexOf()_ starts at 0.
 - _length()_
 - _charAt()_
 - _indexOf()_
@@ -457,7 +466,8 @@ There are 3 ways to create a _StringBuilder_:
 - _delete()_, _deleteCharAt()_
 - _reverse()_
 - _toString()_
-Note: _StringBuffer_ has the same functionality but is thread safe.
+
+**Note**: _StringBuffer_ has the same functionality but is thread safe.
 
 ### Understanding Equality
 
@@ -475,7 +485,7 @@ String b = "   Hello".trim();
 System.out.println(a == b); // false
 System.out.println(a.equals(b)); // true
 ```
-Note: If _equals()_ is not implemented, it will check for reference equality (as `==` does).
+**Note**: If _equals()_ is not implemented, it will check for reference equality (as `==` does).
 
 - if `x.equals(y)` then `x.hashCode()` must equal `y.hashCode()`.
 
@@ -501,6 +511,7 @@ The _equals()_ method on arrays uses reference equality, it does not look at the
 
 #### Sorting
 _Arrays.sort()_
+
 Strings sorts numbers before letters, and uppercase before lowercase.
 
 #### Binary Search
@@ -530,7 +541,7 @@ int[][] ints = {{1, 2},{3, 4}};
 int[][] ints = new int[][] {{1, 2},{3, 4}};
 ```
 
-When initializing a multidimensional array, the size of the first dimension must be provided. The dimensions of other dimensions are not required but a declaration in size can not be preceded by an empty brackets.
+When initializing a multidimensional array, the size of the first dimension must be provided. The dimensions of other dimensions are not required but a declaration in size cannot be preceded by an empty brackets.
 ```java
 int[][][] ints3d = new int[3][2][]; // COMPILES
 int[][][] ints3d = new int[][][] // DOES NOT COMPILE
@@ -575,7 +586,7 @@ All pairs have methods on the pattern of
 - _Integer.parseInt()_ returns primitive type.
 - _Integer.valueOf()_ returns wrapper class.
 
-Note: the _Character_ class does not participate in _parse/valueOf_ methods since _String_ is made up of multiple _char_.
+**Note**: the _Character_ class does not participate in _parse/valueOf_ methods since _String_ is made up of multiple _char_.
 
 ### Autoboxing
 Since Java 5, primitive values will be automatically converted to the relevant wrapper classes.
