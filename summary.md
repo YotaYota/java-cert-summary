@@ -15,13 +15,13 @@
 |*code block* | code between braces ({code})
 |*instance initializer* | code blocks that appear outside methods
 |*numeric literal* | a number that occurs in code
-|*variable* | name of a piece of memory that stores data. 
+|*variable* | name of a piece of memory that stores data
 | *local variable* | defined inside a method
 | *instance variable* | field
 | *class variable* | variable with static keyword in initialization
 
 ### Java keywords
-| keywords | | | | |
+| keywords |
 |--|--|--|--|--|
 | abstract | assert | boolean | break | byte |
 | case | catch | char | class | const |
@@ -33,7 +33,7 @@
 | protected | public | return | short | static |
 | strictfp | super | switch | synchronized | this |
 | throw | throws | transient | true | try |
-| void | volatile | while | 
+| void | volatile | while |
 
 ### Comments
 - single-line comment (//)
