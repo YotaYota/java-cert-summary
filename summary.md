@@ -175,6 +175,7 @@ These three rules apply to everything the programmer is free to name (e.g. metho
 - *Class variables* are variables with the static keyword. In scope from declaration until program ends.
 
 Local variables must be initialized before used. Instance variables and class variables are assigned a default value:
+
 | Variable type | Default initialization value |
 |:---|:---|
 | boolean | false |
@@ -187,11 +188,11 @@ Local variables must be initialized before used. Instance variables and class va
 
 | Element | Example | Required | Where does it go? |
 | :--- | :--- | :---: | :--- |
-| Package declaration | package abc; | No | First line in file |
-| Import statements | import java.util.* | No | Immediately after the package |
-| Class declaration | public class C | Yes | Immediately after import |
-| Field declarations | int value; | No | Anywhere inside a class |
-| Method declarations | void method() | No | Anywhere inside a class |
+| Package declaration | `package abc;` | No | First line in file |
+| Import statements | `import java.util.*` | No | Immediately after the package |
+| Class declaration | `public class C` | Yes | Immediately after import |
+| Field declarations | `int value;` | No | Anywhere inside a class |
+| Method declarations | `void method()` | No | Anywhere inside a class |
 
 Note: comments can go anywhere, even on first line before package.
 
@@ -227,7 +228,7 @@ Objects may implement `finalize()` which gets called when the garbage collector 
 |*operator* | special symbol that can be applied to operands and returns a result
 |*operand* | variable, value or literal operated on by an operator
 |*assignment operator* | binary operator that modifies, or assigns, the variable on the left hand side of the operator with the result of the value of the right-hand side
-|*logical operator* | `&`, `|`, `^`
+|*logical operator* | `&`, `\|`, `^`
 |*bitwise operator* | logical operators applied to numerical data types
 
 ### Operators
@@ -235,11 +236,14 @@ Objects may implement `finalize()` which gets called when the garbage collector 
 Three types: unary, binary, ternary.
 
 Order of operation (by decreasing order of operator precedence)
+
 | Operator | Symbols and examples |
 |:---|:---|
+| **unary**
 | post-unary operators | expression++, expression-\-
 | pre-unary operators | ++expression, --expression
 | other unary operators | ~, +, -, !
+| **binary**
 | multiplication/division/modulus | \*, /, %
 | addition/subtraction | +, -
 | shift operators | <<, >>, >>>
@@ -247,7 +251,9 @@ Order of operation (by decreasing order of operator precedence)
 | equal to/not equal too | ==, !=
 | logical operators | &, ^, \|| 
 | short-circuit logical operators | &&, \|\||
+| **ternary**
 | ternary operators | boolean expression ? expression1 : expression2
+| **assignment**
 | assignment operators | =, +=, -=, \*=, /=, %=, &=, ^=, \|=, <<=, >>=, >>>=
 
 If two operators have the same level of precedence, Java guarantees **left-to-right evaluation**.
@@ -339,11 +345,12 @@ AND `&`, inclusive OR `|`, Exclusive OR `^`.
 Can be applied to both numeric and boolean data types. When they are applied to boolean data types, they are referred to as *logical operators*. When applied to numeric data types, they are referred to as *bitwise operators*.
 
 Truth table:
-|| x `&` y ||| x `|` y ||| x `^` y ||
+
+|| x `&` y ||| x `\|` y ||| x `^` y ||
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **x**\ **y**| **true** | **false** || **true** | **false** || **true** | **false** |
-| **true** | true | false || true | true || false | true |
-| **false** | false | false || true | false || true | false |
+| **x**\\ **y**| **TRUE** | **FALSE** || **TRUE** | **FALSE** || **TRUE** | **FALSE** |
+| **TRUE** | true | false || true | true || false | true |
+| **FALSE** | false | false || true | false || true | false |
 
 Short-circuit operators, `&&` and `||`, does not evaluate right-hand side expression if the left-hand is enough.
 
