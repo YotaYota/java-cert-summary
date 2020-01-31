@@ -139,7 +139,7 @@ double amount = 0xE;
 
 - Despite the fact that loss of precision may occur, a widening primitive conversion never results in a run-time exception.
 
-- For conversion in the other direction, explicit cast are required. 
+- For conversion in the other direction, explicit cast is required.
 
 #### Reference Types
 A *reference type* refers to an object. A reference points to an object by storing the memory address where the object is located.
@@ -150,7 +150,7 @@ A value can be assigned to a reference in one of two ways
 #### Differences
 - Reference types can be assigned `null`. Primitive types will give compiler error if null is assigned.
 - Reference types can be used to call methods (e.g. `myCat.getAge()`). Primitive types does not have methods.
-- All primitives use lowercase type names. It is convention to begin class names with an uppercase letter. 
+- All primitives use lowercase type names (it is convention to begin class names with an uppercase letter).
 
 ### Declaring Variables
 Multiple variables can be declared and initialized in the same statement.
@@ -160,7 +160,7 @@ Note: it is not allowed to *only* initialize multiple variables in the same stat
 ```java
 int x;
 int y;
-x = 1, y = 1;
+x = 1, y = 1; // Does not compile
 ```
 
 ### Identifiers
