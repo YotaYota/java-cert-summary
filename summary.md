@@ -81,12 +81,11 @@ Compilation will create a class file in respective directory.
 
 Location of other files can also be explicitly specified using a class path. For example in JAR files (JARs are like zip files containing mostly Java class files).
 
-### Order of Initialization
-- Fields and instance initializer blocks are run in the order in which they appear in the file.
-- The constructor runs after all fields and instance initializer blocks have run.
 
 ### Primitive Types and Reference Types
+
 #### Primitive types
+
 | Keyword | Type | 
 | :--- | :--- |
 | boolean | true or false |
@@ -99,30 +98,38 @@ Location of other files can also be explicitly specified using a class path. For
 | char | 16-bit Unicode value |
 
 - primitive types defaults to 0 in their respective type.
-
 - Even `char` is promoted to `int`
+- To calculate the range of a primitive type, take 2 to the power of bits and
+divide by 2 to account for negative numbers, and subtract 1 to account for 0
+(which is taken from positive numbers). E.g a `byte` can hold a value from -128
+to 127. 1 `byte` = 8 `bits`.:
 
-- To calculate the range of a primitive type, take 2 to the power of bits and divide by 2 to account for negative numbers, and subtract 1 to account for 0 (which is taken from positive numbers). E.g a `byte` can hold a value from -128 to 127. 1 `byte` = 8 `bits`.:
-```
+```math
 max(1 byte) = 2^8/2 - 1 = 127.
 ```
 
 - When a literal occurs, Java assumes it is an `int` by default. E.g.
+
 ```java
 long max = 3123456789; // Does not compile because literal is too large for int
 long max = 3123456789L; // Compiles
 ```
+
 - When a floating-point literal occurs, Java assumes it is a `double` by default. E.g.
+
 ```java
 float x = 2.1; // Does not compile
 float x = 2.1f; // Compiles
 ```
-- Java accepts other number formats:
-	- octal [0-7]. **0** as prefix (e.g. `017`)
-	- hexadecimal [0-9, A-F]. **0x** or **0X** as prefix (e.g.`0xFF`)
-	- binary [0-1]. **0b** or **0B** as prefix (e.g. `0b10`) 
 
-- Java allows underscores in literals, but not in the beginning, end or next to a decimal point.
+- Java accepts other number formats:
+  - octal [0-7]. **0** as prefix (e.g. `017`).
+  - hexadecimal [0-9, A-F]. **0x** or **0X** as prefix (e.g.`0xFF`).
+  - binary [0-1]. **0b** or **0B** as prefix (e.g. `0b10`).
+
+- Java allows underscores in literals, but not in the beginning, end or next to
+a decimal point.
+
 ```java
 double thousand = 1_00_0.0_0; // Compiles
 ```
@@ -541,7 +548,7 @@ int[][] ints = {{1, 2},{3, 4}};
 int[][] ints = new int[][] {{1, 2},{3, 4}};
 ```
 
-When initializing a multidimensional array, the size of the first dimension must be provided. The dimensions of other dimensions are not required but a declaration in size cannot be preceded by an empty brackets.
+**Note**: When initializing a multidimensional array, the size of the first dimension must be provided. The dimensions of other dimensions are not required but a declaration in size cannot be preceded by an empty brackets.
 ```java
 int[][][] ints3d = new int[3][2][]; // COMPILES
 int[][][] ints3d = new int[][][] // DOES NOT COMPILE
@@ -588,7 +595,7 @@ All pairs have methods on the pattern of
 
 **Note**: the _Character_ class does not participate in _parse/valueOf_ methods since _String_ is made up of multiple _char_.
 
-### Autoboxing
+#### Autoboxing
 Since Java 5, primitive values will be automatically converted to the relevant wrapper classes.
 ```java
 List<Double> weights = new ArrayList<>();
@@ -742,10 +749,10 @@ public final void nap(int minutes) throws InterruptedException {}
 ### Access Modifiers
 |modifier|visibility|
 |:---|:---|
-|_public_| all|
-|_protected_| package and subclass (even in other package)|
-|_package private_| package|
-|_private_| class|
+|`public`| all |
+|`protected`| package and subclass (even in other package) |
+|_none_| package private |
+|`private`| class |
 
 #### Protected
 A subclass in another package may access protected variables, but only if accessed via the sub-classing object.
@@ -775,17 +782,17 @@ Java allows optional specifiers to come before the access modifier.
 |_strictfp_| used for making floating-point calculations portable|
 
 ### Varargs
-A vararg parameter must be the last element in a method's parameter list.
-An array can be passed as varargs, or values values can be passed in which case Java converts them into an array.
-A vararg parameter can be omitted.
-null can be explicitly passed.
+- A vararg parameter must be the last element in a method's parameter list.
+- An array can be passed as varargs, or values can be passed in which case Java converts them into an array.
+- A vararg parameter can be omitted.
+- `null` can be explicitly passed.
 
 ### Static
 Static methods don't require an instance of the class. They are shared among all users of the class.
 
 Static methods have two main purposes:
 1. For utility and helper methods that don't require any object state.
-2. For state that is shared by all instances of the class. Methods that merely uses that state should be static as well.
+2. For state that is shared by all instances of the class (methods that merely uses that state should be static as well).
 
 When accessing a static member, Java only checks reference type. This means that the object can be null, and still the static member can be accessed:
 ```java
@@ -793,7 +800,7 @@ AClassWithStaticMembers s = null;
 s.staticMember; // OK
 ```
 
-Static members cannot call an instance member. 
+Static members cannot call an instance member.
 
 **final** variables cannot be reassigned. Primitive types cannot change value, reference types cannot point to another object. If final values are not initialized, they can be initialized in a _static initializer_.
 
@@ -842,7 +849,7 @@ _Method overloading_ occurs when there are different method signatures with the 
 The parameter type list cannot be the same when overloading. This is also the case for varargs e.g.
 ``` java
 public void fly(int[] numbers) { }
-public void fly(int... numbers) { ] // DOES NOT COMPILE
+public void fly(int... numbers) { } // DOES NOT COMPILE
 ```
 
 #### Autoboxing
@@ -863,25 +870,26 @@ Java accepts wider types, otherwise explicit casting is required.
 
 ### Creating Constructors
 
-Creating new objects with constructors is *instantiation*.
-A constructor is called by using the `new` keyword, when this akeyword occurs, Java allocates memory for the new object.
-`this` tells Java to reference an instance variable.
+- Creating new objects with constructors is *instantiation*.
+- A constructor is called by using the `new` keyword. When this keyword occurs, Java allocates memory for the new object on the heap.
+- `this` tells Java to reference an instance variable.
 
-If there are no constructors present, Java generates a *default constructor* during compile step (omitted in .java, but present in .class file).
+**Note**: If there are *no* constructors present, Java generates a *default constructor* during compile step (omitted in .java, but present in .class file).
 
 ### Constructor overloading
-When `this` is called as a function, Java interprets it as a constructor call. `this()` has to be the first non-commented line in the constructor.
+When `this` is called as a function, Java interprets it as a constructor call. `this()` has to be the first non-commented statement in the constructor.
 
 This can be used for *constructor chaining*
 ```java
 public Hamster(int weight) {
-	this(weight, "brown");
+    this(weight, "brown");
 }
 ```
 
 ### Final
 
 `final` variables must be assigned a value **exactly once**. Either in:
+
 - the line of declaration,
 - in an instance initializer,
 - in the constructor.
@@ -897,6 +905,7 @@ By the time the constructor completes, all `final` instance variables must have 
 4. constructor
 
 **Remark**: If the class is not initialized, only rules 1 and 2 applies.
+**Remark**: If object is initialized in a static initializer, the object initialization lands on top of the stack.
 
 
 ### Encapsulating Data
@@ -912,7 +921,7 @@ Java defines a naming convention that is used in *JavaBeans*. *JavaBeans* calls 
 | Getters begin with *is* or *get* if the property is a boolean | `public boolan isBool` `public boolean getBool`|
 | Getters begin with *get* if the property is not a boolean | `public int getNum` |
 | Setters begins with *set* | `public void setNum` |
-|The method name must hava prefix of *set*/*get*/*is*, followed by the name of the variable with first letter capital | |
+|The method name must have a prefix of *set*/*get*/*is*, followed by the name of the variable with first letter capital | |
 
 #### Immutable classes
 Preventing callers from changing the instance variables.
