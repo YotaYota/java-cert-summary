@@ -894,18 +894,30 @@ public Hamster(int weight) {
 - in an instance initializer,
 - in the constructor.
 
-By the time the constructor completes, all `final` instance variables must have been set.
+By the time the constructor completes, all `final` instance variables must have
+been set.
 
 
 ### Order of Initialization
 
 1. *super class* if there is one
 2. *static variable declarations* and *static initilizers* (in the order they appear)
-3. *instance variable declarations* and *instance initializers* (in the order they appear)
+3. *instance variable declarations* and *instance initializers* (in the order
+they appear)
 4. constructor
 
 **Remark**: If the class is not initialized, only rules 1 and 2 applies.
-**Remark**: If object is initialized in a static initializer, the object initialization lands on top of the stack.
+**Remark**: If object is initialized in a static initializer, the object
+initialization lands on top of the stack.
+
+```java
+public class OrderOfInit {
+  static {System.out.println("printed first");}
+  {System.out.println("printed second");}
+  static {new OrderOfInit();}
+  static {System.out.println("printed third");}
+}
+```
 
 
 ### Encapsulating Data
