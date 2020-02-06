@@ -1,4 +1,4 @@
-# Sybex Notes
+# OCA Sybex Notes
 
 ## Chapter 1: Java Building Blocks
 
@@ -21,6 +21,7 @@
 | *class variable* | variable with static keyword in initialization
 
 ### Java keywords
+
 | keywords |||||
 |--|--|--|--|--|
 | abstract | assert | boolean | break | byte |
@@ -36,11 +37,13 @@
 | void | volatile | while |
 
 ### Comments
+
 - single-line comment (//)
 - multiple-line comment (/* ... */)
 - Javadoc comment (/** ... */)
 
 ### Files
+
 - For multiple classes in the same file, at most **one** is allowed to be public.
 - A public class needs to match the filename.
 - When a file is compiled, multiple `.class` files will be created, one for each class.
@@ -49,44 +52,56 @@
 - Java class files run on the JVM.
 
 ### main()
-- A Java program begins execution with its `main()` method. It is the gateway between the startup of a Java process (handled by JVM), and the beginning of a programmer's code.
+
+- A Java program begins execution with its `main()` method. It is the gateway
+between the startup of a Java process (handled by JVM), and the beginning of a
+programmer's code.
 - All command-line arguments are treated as *String* objects.
 
 ### Packages
+
 - Java put classes in *packages*.
 - Import statements tell Java which packages to look in for classes.
 - Naming rules are the same as for variable names.
 - Wildcard imports `.*` imports all classes in package, but not in child packages.
-- Only one wildcard can be used, and it must be used at the end of the line ( e.g. neither `java.nio.*.*` nor `java.nio.*.Paths` works) 
+- Only one wildcard can be used, and it must be used at the end of the line
+( e.g. neither `java.nio.*.*` nor `java.nio.*.Paths` works)
 - `java.lang` is automatically imported.
 - Java automatically looks in the current package for other classes.
 
-##### Naming conflicts
+#### Naming conflicts
+
 If naming conflicts occur, explicit import takes precedence over wildcard import:
+
 ```java
 java.util.Date
 java.sql.* //java.sql.Date is omitted
 ```
+
 Ambiguity gives compiler error:
+
 ```java
 java.util.*
 java.sql.*
 ```
+
 If both needs to be used, the fully qualified name can be used without an import.
 
 ##### Compilation
-For two files `packagea/ClassA.java` and `packageb/ClassB.java`, *ClassB* can import *ClassA* by the statement `import packagea.ClassA`.
+
+For two files `packagea/ClassA.java` and `packageb/ClassB.java`, *ClassB* can
+import *ClassA* by the statement `import packagea.ClassA`.
 Compilation will create a class file in respective directory.
-`java packageb.ClassB` will run ClassB from `.` directory. 
+`java packageb.ClassB` will run ClassB from `.` directory.
 
-Location of other files can also be explicitly specified using a class path. For example in JAR files (JARs are like zip files containing mostly Java class files).
-
+Location of other files can also be explicitly specified using a class path. For
+example in JAR files (JARs are like zip files containing mostly Java class files).
 
 ### Primitive Types and Reference Types
 
 #### Primitive types
 
-| Keyword | Type | 
+| Keyword | Type |
 | :--- | :--- |
 | boolean | true or false |
 | byte | 8-bit integral value |
@@ -115,7 +130,8 @@ long max = 3123456789; // Does not compile because literal is too large for int
 long max = 3123456789L; // Compiles
 ```
 
-- When a floating-point literal occurs, Java assumes it is a `double` by default. E.g.
+- When a floating-point literal occurs, Java assumes it is a `double` by
+default. E.g.
 
 ```java
 float x = 2.1; // Does not compile
@@ -136,34 +152,48 @@ double thousand = 1_00_0.0_0; // Compiles
 
 ##### The widening primitive conversions
 
-- *The widening primitive conversions* states that primitives can be converted to a larger primitive:
-(`byte` or `char`) -> `short` -> `int` -> `long` -> `float` -> `double` e.g.
+- *The widening primitive conversions* states that primitives can be converted
+to a larger primitive: (`byte` or `char`) -> `short` -> `int` -> `long` -> `float` -> `double` e.g.
+
 ```java
 int amount = 0b101;
 int amount = 0xE;
 double amount = 0xE;
 ```
 
-- Despite the fact that loss of precision may occur, a widening primitive conversion never results in a run-time exception.
+- Despite the fact that loss of precision may occur, a widening primitive
+conversion never results in a run-time exception.
 
 - For conversion in the other direction, explicit cast is required.
 
 #### Reference Types
-A *reference type* refers to an object. A reference points to an object by storing the memory address where the object is located.
+
+A *reference type* refers to an object. A reference points to an object by
+storing the memory address where the object is located.
 A value can be assigned to a reference in one of two ways
+
 - with the `new` keyword
 - another object of the same type
 
 #### Differences
-- Reference types can be assigned `null`. Primitive types will give compiler error if null is assigned.
-- Reference types can be used to call methods (e.g. `myCat.getAge()`). Primitive types does not have methods.
-- All primitives use lowercase type names (it is convention to begin class names with an uppercase letter).
+
+- Reference types can be assigned `null`. Primitive types will give compiler
+error if null is assigned.
+- Reference types can be used to call methods (e.g. `myCat.getAge()`). Primitive
+types does not have methods.
+- All primitives use lowercase type names (it is convention to begin class names
+with an uppercase letter).
 
 ### Declaring Variables
-Multiple variables can be declared and initialized in the same statement.
-Many variables can be **declared** in the same statement, provided they are of the same type (however, type is only allowed to be declared once for each statement). Any, or all of them can be **initialized** inline.
 
-**Note**: it is not allowed to *only* initialize multiple variables in the same statement. E.g.
+Multiple variables can be declared and initialized in the same statement.
+Many variables can be **declared** in the same statement, provided they are of
+the same type (however, type is only allowed to be declared once for each
+statement). Any, or all of them can be **initialized** inline.
+
+**Note**: it is not allowed to *only* initialize multiple variables in the same
+statement. E.g.
+
 ```java
 int x;
 int y;
@@ -171,17 +201,26 @@ x = 1, y = 1; // Does not compile
 ```
 
 ### Identifiers
-These three rules apply to everything the programmer is free to name (e.g. methods, classes, variables)
+
+These three rules apply to everything the programmer is free to name (e.g.
+methods, classes, variables)
+
 - identifier must begin with a *letter*, *$* or *_*
 - subsequent characters can be numbers
 - Java reserved words cannot be used (however, Java is case sensitive)
 
 ### Default Initialization & Scope
-- *Local variables* are variables defined within a method and can never have a larger scope than the method they are defined in. In scope from declaration to end of block.
-- *Instance variables* are also known as fields. In scope from declaration until object is garbage collected. 
-- *Class variables* are variables with the static keyword. In scope from declaration until program ends.
 
-Local variables must be initialized before used. Instance variables and class variables are assigned a default value:
+- *Local variables* are variables defined within a method and can never have a
+larger scope than the method they are defined in. In scope from declaration to
+end of block.
+- *Instance variables* are also known as fields. In scope from declaration until
+object is garbage collected.
+- *Class variables* are variables with the static keyword. In scope from
+declaration until program ends.
+
+Local variables must be initialized before used. Instance variables and class
+variables are assigned a default value:
 
 | Variable type | Default initialization value |
 |:---|:---|
@@ -205,17 +244,25 @@ Local variables must be initialized before used. Instance variables and class va
 
 ### Destroying Objects
 
-All Java objects are stored in the program's memory *heap* (*free store*); memory allocated to the Java program.
+All Java objects are stored in the program's memory *heap* (*free store*);
+memory allocated to the Java program.
 `System.gc()` is not guaranteed to run. It might be ignored by Java.
 
-An object will remain on the heap until it is no longer reachable. An object is no longer reachable if anyone of the following occurs:
+An object will remain on the heap until it is no longer reachable. An object is
+no longer reachable if anyone of the following occurs:
+
 - The object no longer has any references pointing to it.
 - All references to the object has gone out of scope.
 
 #### finalize()
-Objects may implement `finalize()` which gets called when the garbage collector tries to collect the object. But if the garbage collector fails the first time, it won't call finalize() the second time. All in all, there is no guarantee that finalize will run, and it wont run more than once.
+
+Objects may implement `finalize()` which gets called when the garbage collector
+tries to collect the object. But if the garbage collector fails the first time,
+it won't call finalize() the second time. All in all, there is no guarantee that
+finalize will run, and it wont run more than once.
 
 ### Benefits of Java
+
 |||
 |:---|:---|
 | **Object oriented** | All code is defined in classes
@@ -225,16 +272,15 @@ Objects may implement `finalize()` which gets called when the garbage collector 
 | **Simple** | Pointers and operator overloading eliminated (compared to C++).
 | **Secure** | Java code runs inside the JVM, so it is sandboxed.
 
-
-<div class="pagebreak"></div>
-
 ## Chapter 2: Operators and Statements
 
 | Terminology | Meaning |
 |:---|:---|
 |*operator* | special symbol that can be applied to operands and returns a result
 |*operand* | variable, value or literal operated on by an operator
-|*assignment operator* | binary operator that modifies, or assigns, the variable on the left hand side of the operator with the result of the value of the right-hand side
+|*assignment operator* | binary operator that modifies, or assigns, the variable
+on the left hand side of the operator with the result of the value of the
+right-hand side
 |*logical operator* | `&`, `\|`, `^`
 |*bitwise operator* | logical operators applied to numerical data types
 
@@ -256,34 +302,47 @@ Order of operation (by decreasing order of operator precedence)
 | shift operators | <<, >>, >>>
 | relational operators | <, >, <=, >=, instanceof
 | equal to/not equal to | ==, !=
-| logical operators | &, ^, \|| 
+| logical operators | &, ^, \||
 | short-circuit logical operators | &&, \|\||
 | **ternary**
 | ternary operators | boolean expression ? expression1 : expression2
 | **assignment**
 | assignment operators | =, +=, -=, \*=, /=, %=, &=, ^=, \|=, <<=, >>=, >>>=
 
-If two operators have the same level of precedence, Java guarantees **left-to-right evaluation**.
-Order of precedence can be overridden by parenthesis.
+**Note**: If two operators have the same level of precedence, Java guarantees
+**left-to-right evaluation**.
+
+**Note**: Order of precedence can be overridden by parenthesis.
 
 #### Binary Operators
+
 Two operands.
 
 ##### Arithmetic Operators
 
-Includes `+`, `-`, `*`, `/`, `%` (they also include the unary operators `++` and `--` ).
-All arithmetic operators can be applied to all primitive types except `boolean` and `String`. For `String`, only the operators `+` and `+=` can be applied (String concatenation).
-For integers, division result in the floor value.
+- Includes `+`, `-`, `*`, `/`, `%` (they also include the unary operators `++`
+and `--` ).
+- All arithmetic operators can be applied to all primitive types except `boolean`
+and `String`. For `String`, only the operators `+` and `+=` can be applied
+(String concatenation).
+- For integers, division result in the floor value.
 
 ##### Numeric Promotion
 
 Numeric promotion rules:
-1. If two values have different data types, Java will automatically promote the lesser to the larger of the two types.
-2. If one value is integral and the other is floating-point, Java will automatically promote the integral value to the floating-point's data type.
-3. Smaller data types (`byte` , `short`, and `char`) are first promoted to `int` any time they are used in a binary arithmetic operator (even if neither of them are `int`).
-4. After all promotion has occurred and the operands have the same data type, the resulting value will have the same data type as its promoted operands.
+
+1. If two values have different data types, Java will automatically promote the
+lesser to the larger of the two types.
+2. If one value is integral and the other is floating-point, Java will
+automatically promote the integral value to the floating-point's data type.
+3. Smaller data types (`byte` , `short`, and `char`) are first promoted to
+`int` any time they are used in a binary arithmetic operator (even if neither of
+them are `int`).
+4. After all promotion has occurred and the operands have the same data type,
+the resulting value will have the same data type as its promoted operands.
 
 Example:
+
 ```java
 short x = 1;
 short y = 1;
@@ -291,18 +350,22 @@ short z = x*y; // DOES NOT COMPILE
 ```
 
 #### Unary Operators
-One operand.
-`+`, `-`, `++`, `--`, `!`, `~`.
+
+One operand. `+`, `-`, `++`, `--`, `!`, `~`.
 
 On the exam, look out for questions that mixes logical and numerical negation, e.g.
+
 ```java
 int x = !5; // Does not compile
 boolean y = -true; // Does not compile
 boolean z = !0; // Does not compile
 ```
+
 **Note**: in Java *0* and *false*, *1* and *true* are not related in any way.
 
-For pre-unary operators, the value is decremented *before* it is returned. For post-unary operators, the value is incremented *after* it is returned. E.g.
+For pre-unary operators, the value is decremented *before* it is returned. For
+post-unary operators, the value is incremented *after* it is returned. E.g.
+
 ```java
 int x = 0;
 System.out.println(++x); // Output: 1
@@ -314,25 +377,36 @@ System.out.println(x); // Output: 0
 int x = 3;
 int y = ++x * 5 / x-- + --x; // Results in: x = 2, y = 7
 ```
+
 #### Ternary Operator
 
-There is only one in java, namely `? :`.
-`booleanExpression ? expression1 : expression2;`
-The first operand must be a boolean expression, second and third operands can be any expression that returns a value.
-It is not required that second and third operand is of the same type, although it may come in to play when combined with the assignment operator.
-Only one of the right hand side operators will be evaluated at runtime, so side-effects might not be applied at runtime.
+There is only one in java, namely `? :`, `booleanExpression ? expression1 : expression2;`
+
+- The first operand must be a boolean expression, second and third operands can be
+any expression that returns a value.
+- It is not required that second and third operand is of the same type, although
+it may come in to play when combined with the assignment operator.
+
+**Note**: Only one of the right hand side operators will be evaluated at
+runtime, so side-effects might not be applied at runtime.
 
 #### Casting Primitive Values
 
-Casting is required when you are going from a larger numerical data type to a smaller numerical data type, or converting from floating-point to integral value.
+Casting is required when you are going from a larger numerical data type to a
+smaller numerical data type, or converting from floating-point to integral value.
+
 ```java
 int x = (int) 1.0;
 short y = (short) 1921222; // Stored as 20678 (numeric overflow)
 ```
 
-Numeric *overflow* is when the number is too large to be stored in the data type. There is also an *underflow* when the number is too low to fit in the data type.
+Numeric *overflow* is when the number is too large to be stored in the data
+type. There is also an *underflow* when the number is too low to fit in the data
+type.
 
-Compound assignment operators will *automatically* cast the resulting value into the type of the left-hand side, e.g.
+Compound assignment operators will *automatically* cast the resulting value into
+the type of the left-hand side, e.g.
+
 ```java
 long x = 10;
 int y = 5;
@@ -340,7 +414,9 @@ y = y * x; // Does not compile
 y *= x; // Compiles
 ```
 
-The result of the (compound) assignment operator, `=`, is an expression of itself, i.e.
+The result of the (compound) assignment operator, `=`, is an expression of
+itself, i.e.
+
 ```java
 long x = 5;
 long y = (x=3); // Gives: x = 3, y = 3
@@ -350,13 +426,20 @@ long y = (x=3); // Gives: x = 3, y = 3
 
 Relational operators compare two expressions and return a boolean value.
 
-`<`, `>`, `<=`, `>=` are applied to numeric primitive data types only. If two numeric data types are different, numeric promotion takes place.
+`<`, `>`, `<=`, `>=` are applied to numeric primitive data types only. If two
+numeric data types are different, numeric promotion takes place.
 
-The `instanceof` operator, e.g. `a instanceof b` is true if the reference that a points to is an instance of a class, subclass or class that implements a particular interface, as named in b.
+The `instanceof` operator, e.g. `a instanceof b` is true if the reference that a
+points to is an instance of a class, subclass or class that implements a
+particular interface, as named in b.
 
 #### Logical Operators
+
 AND `&`, inclusive OR `|`, Exclusive OR `^`.
-Can be applied to both numeric and boolean data types. When they are applied to boolean data types, they are referred to as *logical operators*. When applied to numeric data types, they are referred to as *bitwise operators*.
+
+Can be applied to both numeric and boolean data types. When they are applied to
+boolean data types, they are referred to as *logical operators*. When applied to
+numeric data types, they are referred to as *bitwise operators*.
 
 Truth table:
 
@@ -366,70 +449,89 @@ Truth table:
 | **TRUE** | true | false || true | true || false | true |
 | **FALSE** | false | false || true | false || true | false |
 
-Short-circuit operators, `&&` and `||`, does not evaluate right-hand side expression if the left-hand is sufficient.
+Short-circuit operators, `&&` and `||`, does not evaluate right-hand side
+expression if the left-hand is sufficient.
 
 #### Equality Operators
+
 Used in 1 of 3 scenarios:
+
 1. Comparing two numeric primitive types. Numeric promotion might take place.
 2. Comparing two *boolean* values.
 3. Comparing two objects, including *null* and *String*.
 
-For object comparison, the equality operator is applied to references to the object. Two references are equal if and only if they point to the same object or they point to null. For objects, the equality operator is evaluating if objects are the same, rather than if they are equivalent.
+For object comparison, the equality operator is applied to references to the
+object. Two references are equal if and only if they point to the same object or
+they point to null. For objects, the equality operator is evaluating if objects
+are the same, rather than if they are equivalent.
 
 ### Understanding Java Statements
+
 *Control flow statements* is the way in which Java can break up the flow of execution.
 
 #### Statements
+
 - *if-then*
 - *if-then-else*
 - *switch*
-	- optional default statement, branched to if no cases match
-	- supported types:
-		- *byte*, *Byte*
-		- *short*, *Short*
-		- *int*, *Integer*
-		- *char*, *Character*
-		- *String*
-		- *enum*
-	- target variable is evaluated at runtime
-	- cases needs to be compile-time constants of the same data type as the switch value (literals, enum constants, or final keyword).
-	- omitting break statements will result in fall-through
-	- numerical promotion takes place
+  - optional default statement, branched to if no cases match
+  - supported types:
+    - *byte*, *Byte*
+    - *short*, *Short*
+    - *int*, *Integer*
+    - *char*, *Character*
+    - *String*
+    - *enum*
+  - target variable is evaluated at runtime
+  - cases needs to be compile-time constants of the same data type as the switch
+  value (literals, enum constants, or final keyword).
+  - omitting break statements will result in fall-through
+  - numerical promotion takes place
 - *while*
 - *do-while*
-	- guarantees that the statement or block is evaluated at least once
+  - guarantees that the statement or block is evaluated at least once
 - *for*
-	- *for(initialization; booleanExpression; updateStatement)  {};*
-	- initialization and update sections may contain multiple statements, separated by commas
-		- note that multiple assignments is not consistent with normal multiple assignment:
-			- `x = 0, y = 0` is OK in for loops, but not otherwise.
-			- assigning values to variables of different types is OK in for loops, but not otherwise.
+  - *for(initialization; booleanExpression; updateStatement)  {};*
+  - initialization and update sections may contain multiple statements,
+  separated by commas
+    - note that multiple assignments is not consistent with normal multiple assignment:
+      - `x = 0, y = 0` is OK in for loops, but not otherwise.
+      - assigning values to variables of different types is OK in for loops, but
+      not otherwise.
 - *for-each*
-	- right-hand side of the for-each loop statement must be a built in array or an object whose class implements *java.lang.Iterable*.
+  - right-hand side of the for-each loop statement must be a built in array or
+  an object whose class implements *java.lang.Iterable*.
 
 **Note**: if no bracers is used, only the next statement is evaluated.
 
 ### Understanding Advanced Flow Control
-A **label** is an optional pointer to the head of statement that allows the application flow to jump to it or break from it. It as a single word proceeded by a colon. Labels follow the same naming rules as for identifiers.
+
+A **label** is an optional pointer to the head of statement that allows the
+application flow to jump to it or break from it. It as a single word proceeded
+by a colon. Labels follow the same naming rules as for identifiers.
+
 The **break** statement transfers the flow of control to the enclosing statement.
-The **continue** statement transfers the flow of control to the boolean expression that determines if the loop should continue.
+
+The **continue** statement transfers the flow of control to the boolean
+expression that determines if the loop should continue.
 
 **Note**: label can be used in conjunction with either break or continue.
-
-<div class="pagebreak"></div>
 
 ## Chapter 3: Core Java APIs
 
 _Mutable_ : an object that is changeable.
 
-_Immutable_ : an object that can't be changed once it's created. Immutable classes are final, and subclasses cannot add mutable behavior.
+_Immutable_ : an object that can't be changed once it's created. Immutable
+classes are final, and subclasses cannot add mutable behavior.
 
 ### Creating and Manipulating String
 
 _String_ is immutable.
 _StringBuilder_ is mutable.
 
-The `+` operator can be used in two ways within the same line of code. These are the 3 rules governing the `+` operator:
+The `+` operator can be used in two ways within the same line of code. These are
+the 3 rules governing the `+` operator:
+
 1. If both operands are numeric, + means numeric addition.
 2. If either operand is a String, + means concatenation.
 3. The expression is evaluated from left to right.
@@ -437,38 +539,50 @@ The `+` operator can be used in two ways within the same line of code. These are
 `+=` operator in concatenation: `s += "2"` means the same thing as `s = s + 2`.
 
 #### The String Pool
-Also know as *intern pool*, is located in the JVM. The string pool contains literal values that appear in the program.
-_object.toString()_ is a String but not a literal, hence does not go to the string pool. Strings not in the string pool are garbage collected as other objects.
+
+Also know as *intern pool*, is located in the JVM. The string pool contains
+literal values that appear in the program.
+_object.toString()_ is a String but not a literal, hence does not go to the
+string pool. Strings not in the string pool are garbage collected as other objects.
 
 #### String
-`new String("some string")` forces the String object to not be included in the string pool.
+
+`new String("some string")` forces the String object to not be included in the
+string pool.
 
 ##### Important String methods
+
 **Note**: _length()_ gives length of String, but _indexOf()_ starts at 0.
+
 - _length()_
 - _charAt()_
 - _indexOf()_
 - _substring()_
-	- the _endIndex_ parameter is allowed to be 1 past the end of the sequence.
+  - the _endIndex_ parameter is allowed to be 1 past the end of the sequence.
 - _toLowerCase()_, _toUpperCase()_
 - _equals()_, _equalsIgnoreCase()_
 - _startsWith()_, _endsWith()_
 - _contains()_
 - _replace()_
 - _trim()_
-	- removes whitespace `\t` (tab) and `\n` (new line) from beginning and end of a String.
+  - removes whitespace `\t` (tab) and `\n` (new line) from beginning and end of
+  a String.
 
 ### StringBuilder
+
 The _StringBuilder_ methods changes its own state and returns a reference to itself.
 There are 3 ways to create a _StringBuilder_:
+
 - _new StringBuilder();_
 - _new StringBuilder("some string");_
 - _new StringBuilder(10);_
 
 #### Important StringBuilder methods
+
 - _charAt()_, _indexOf()_, _length()_, _substring()_
 - _append()_
-	- _append()_ has many signatures for converting to String, e.g. _sb.append(true)_ appends _"true"_.
+  - _append()_ has many signatures for converting to String, e.g.
+  _sb.append(true)_ appends _"true"_.
 - _insert()_
 - _delete()_, _deleteCharAt()_
 - _reverse()_
@@ -479,32 +593,39 @@ There are 3 ways to create a _StringBuilder_:
 ### Understanding Equality
 
 - JVM reuses String literals
+
 ```java
 String a = "Hello";
 String b = "Hello";
 System.out.println(a == b); // true
 ```
 
-In the code below _a_ and _b_ are not the same at compile time, hence a new String is created for _b_.
+In the code below _a_ and _b_ are not the same at compile time, hence a new
+String is created for _b_.
+
 ```java
 String a = "Hello";
 String b = "   Hello".trim();
 System.out.println(a == b); // false
 System.out.println(a.equals(b)); // true
 ```
-**Note**: If _equals()_ is not implemented, it will check for reference equality (as `==` does).
 
-- if `x.equals(y)` then `x.hashCode()` must equal `y.hashCode()`.
+**Note**: If _equals()_ is not implemented, it will check for reference equality
+(as `==` does).
+
+**Note**: if `x.equals(y)` then `x.hashCode()` must equal `y.hashCode()`.
 
 ### Understanding Java Arrays
 
 ```java
 import java.util.Arrays;
 ```
+
 An array is an area of memory on the heap with space for a fixed number of elements.
 An array is a reference variable, even if it is an array of primitives.
 
 Ways of creating an array:
+
 ```java
 int[] numbers;
 int [] numbers;
@@ -514,22 +635,32 @@ int numbers [];
 int[] numbers = {42, 3, 11};
 ```
 
-The _equals()_ method on arrays uses reference equality, it does not look at the elements of the array.
+The _equals()_ method on arrays uses reference equality, it does not look at the
+elements of the array.
 
 #### Sorting
-_Arrays.sort()_
 
-Strings sorts numbers before letters, and uppercase before lowercase.
+Use _Arrays.sort()_.
+
+**Note**: Strings sorts numbers before letters, and uppercase before lowercase.
 
 #### Binary Search
+
 ```java
 Arrays.binarySearch(numbers, 2);
 ```
-- If the element is found, binarySearch will give the index. If the element is not found, binarySearch will give the element where it should be inserted to remain sorted as _-(indexToInsertAt + 1)_ (negative for not found, and minus one in order to omit 0 index).
+
+- If the element is found, binarySearch will give the index. If the element is
+not found, binarySearch will give the element where it should be inserted to
+remain sorted as _-(indexToInsertAt + 1)_ (negative for not found, and minus one
+in order to omit 0 index).
 - Binary search can only be used on a sorted array, otherwise it is unpredictable.
 
 ### Multidimensional Arrays
-Arrays that can hold other arrays. Note that the sub-arrays does not have to be of the same size.
+
+Arrays that can hold other arrays. Note that the sub-arrays does not have to be
+of the same size.
+
 ```java
 int[][] vars; //2D
 int vars[][]: //2D
@@ -541,14 +672,19 @@ int[] vars1[], vars2[][] //2D and 3D
 String[][] rectancgle = new String[3][2];
 ```
 
-Multidimensional arrays can be initialized with the **new operator** or an **array initializer**.
+Multidimensional arrays can be initialized with the **new operator** or an
+**array initializer**.
+
 ```java
 int[][] ints = new int[2][2];
 int[][] ints = {{1, 2},{3, 4}};
 int[][] ints = new int[][] {{1, 2},{3, 4}};
 ```
 
-**Note**: When initializing a multidimensional array, the size of the first dimension must be provided. The dimensions of other dimensions are not required but a declaration in size cannot be preceded by an empty brackets.
+**Note**: When initializing a multidimensional array, the size of the first
+dimension must be provided. The dimensions of other dimensions are not required
+but a declaration in size cannot be preceded by an empty brackets.
+
 ```java
 int[][][] ints3d = new int[3][2][]; // COMPILES
 int[][][] ints3d = new int[][][] // DOES NOT COMPILE
@@ -556,29 +692,37 @@ int[][][] ints3d = new int[][][3] // DOES NOT COMPILE
 ```
 
 ### Understanding an ArrayList
+
 ```java
 import java.util.ArrayList;
 ```
+
 _ArrayList_ can change in size.
+
 Implements the interface _List_.
 
 3 ways to create an _ArrayList_ including elements of _Object_ type:
+
 ```java
 ArrayList list1 = new ArrayList();
 ArrayList list2 = new ArrayList(10);
 ArrayList list3 = new ArrayList(list2); // Copy of list2
 ```
+
 Using generics
+
 ```java
 List<String> list = new ArrayList<>();
 ```
+
 #### Important ArrayList methods
+
 - _add()_
-	- _boolean add(E element)_ always returns true.
-	- _void add(int index, E element)_
+  - _boolean add(E element)_ always returns true.
+  - _void add(int index, E element)_
 - _remove()_
-	- _boolean remove(Object object)_ true if a match was found.
-	- _void remove(int index)_
+  - _boolean remove(Object object)_ true if a match was found.
+  - _void remove(int index)_
 - _E set(int index, E newElement)_ replaces element at index
 - _isEmpty()_
 - _size()_
@@ -587,23 +731,31 @@ List<String> list = new ArrayList<>();
 - _equals()_ true if contains the same elements in the same order.
 
 ### Wrapper Classes
+
 Primitive types have corresponding wrapper classes.
 
 All pairs have methods on the pattern of
+
 - _Integer.parseInt()_ returns primitive type.
 - _Integer.valueOf()_ returns wrapper class.
 
-**Note**: the _Character_ class does not participate in _parse/valueOf_ methods since _String_ is made up of multiple _char_.
+**Note**: the _Character_ class does not participate in _parse/valueOf_ methods
+since _String_ is made up of multiple _char_.
 
 #### Autoboxing
-Since Java 5, primitive values will be automatically converted to the relevant wrapper classes.
+
+Since Java 5, primitive values will be automatically converted to the relevant
+wrapper classes.
+
 ```java
 List<Double> weights = new ArrayList<>();
 weights.add(50.5);
 weights.add(new Double(60));
 ```
 
-The following code generates a _NullPointerException_ because Java tries to convert _null_ to _int_.
+The following code generates a _NullPointerException_ because Java tries to
+convert _null_ to _int_.
+
 ```java
 List<Integer> numbers = new ArrayList<>();
 numbers.add(null); // Integer is not a primitive
@@ -611,14 +763,21 @@ int n = numbers.get(0); //NullPointerException
 ```
 
 ### Converting Between Array and List
+
 #### List to array
+
 ```java
 list.toArray() // Array with Object types
 list.toArray(new String[0]); // Array with String types (with corresponding size)
 ```
+
 #### array to List
-The original array and created array _backed List_ are linked. When change is made in one, it is available in the other.
+
+The original array and created array _backed List_ are linked. When change is
+made in one, it is available in the other.
+
 It is __fixed size__, we are not allowed to change the size.
+
 ```java
 List<String> list = Arrays.asList(array);
 list.set(1, "test");
@@ -627,6 +786,7 @@ list.remove(1); // throws UnsupportedOperationException
 ```
 
 ### Sorting Lists
+
 ```java
 Collections.sort(list);
 ```
@@ -636,6 +796,7 @@ Collections.sort(list);
 ```java
 import java.time.*;
 ```
+
 - Static classes. `new` keyword is not allowed.
 - Created object is immutable.
 
@@ -650,12 +811,14 @@ import java.time.*;
 |*FormatStyle*| _SHORT_, _MEDIUM_|
 
 #### LocalDate
+
 ```java
 LocalDate.of(2015, Month.JANUARY, 20);
 LocalDate.of(2015, 1, 20);
 ```
 
 #### LocalTime
+
 ```java
 LocalTime.of(6, 15); // Hours and minutes
 LocalTime.of(6, 15, 30); // + seconds
@@ -663,12 +826,14 @@ LocalTime.of(6, 15, 30, 200); // + nanos
 ```
 
 #### LocalDateTime
+
 ```java
 LocalDateTime.of(2015, Month.JANUARY, 20, 6, 15, 30);
 LocalDateTime.of(localDate, localTime);
 ```
 
 #### Period
+
 ```java
 Period.ofYears(1);
 Period.ofMonths(3);
@@ -681,6 +846,7 @@ Period.ofYears(1).ofWeeks(3) // Every 3 weeks
 ```
 
 #### Duration
+
 ```java
 Duration.ofDays(1);
 Duration.ofHours(3);
@@ -690,6 +856,7 @@ Duration.ofNanos(200);
 ```
 
 #### Important methods
+
 - _plusNanos()_, _minusNanos()_
 - _plusSeconds()_, _minusSeconds()_
 - _plusMinutes()_, _minusMinutes()_
@@ -703,6 +870,7 @@ Duration.ofNanos(200);
 #### Formatting Dates and Times
 
 Format can be called from the date/time class or the DateTimeFormat class:
+
 ```java
 date.format(DateTimeFormatter.ISO_LOCAL_DATE);
 time.format(DateTimeFormatter.ISO_LOCAL_TIME);
@@ -712,6 +880,7 @@ DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.
 shortDateTime.format(dateTime);
 shortDateTime.format(date);
 ```
+
 ```java
 DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
 DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)
@@ -721,32 +890,35 @@ DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm");
 ```
 
 ##### Parsing
+
 Pattern can be specified. If not specified, the default is used
+
 ```java
 DateTimeFormatter f = DateTimeFormatter.ofPattern("MM dd yyy");
 LocalDate.parse("01 02 2015", f);
 LocalTime.parse("11:22"); // Uses default parser
 ```
 
-
 ## Chapter 4: Methods and Encapsulation
 
 ```java
 public final void nap(int minutes) throws InterruptedException {}
 ```
+
 |Element|Example|Required|
 |:---|:---|:---|
-|access modifier| `public` |<font color="red">N</font>|
-|optional specifier| `final` |<font color="red">N</font>|
-|return type| `void` |<font color="green">Y</font>|
-|method name| |<font color="green">Y</font>|
-|parameter list| |<font color="green">Y</font>|
-|exception| `throws InterruptedException` |<font color="red">N</font>|
-|method body| `{}` |<font color="green">Y</font>|
+|access modifier| `public` |N>|
+|optional specifier| `final` |N>|
+|return type| `void` |Y>|
+|method name| |Y|
+|parameter list| |Y|
+|exception| `throws InterruptedException` |N>|
+|method body| `{}` |Y|
 
 **Note**: optional specifiers are allowed to come before access modifier.
 
 ### Access Modifiers
+
 |modifier|visibility|
 |:---|:---|
 |`public`| all |
@@ -755,7 +927,10 @@ public final void nap(int minutes) throws InterruptedException {}
 |`private`| class |
 
 #### Protected
-A subclass in another package may access protected variables, but only if accessed via the sub-classing object.
+
+A subclass in another package may access protected variables, but only if
+accessed via the sub-classing object.
+
 ```java
 package differentpackage;
 import protectedpackage.ProtectedClass;
@@ -767,9 +942,10 @@ public class ThisClass extends ProtectedClass {
 
     ProtectedClass pc = new ProtectedClass();
     pc.inheritedProtectedMethod(); // DOES NOT COMPILE
-``` 
+```
 
 ### Optional Specifiers
+
 Java allows optional specifiers to come before the access modifier.
 
 |specifier|description|
@@ -782,19 +958,27 @@ Java allows optional specifiers to come before the access modifier.
 |_strictfp_| used for making floating-point calculations portable|
 
 ### Varargs
+
 - A vararg parameter must be the last element in a method's parameter list.
-- An array can be passed as varargs, or values can be passed in which case Java converts them into an array.
+- An array can be passed as varargs, or values can be passed in which case Java
+converts them into an array.
 - A vararg parameter can be omitted.
 - `null` can be explicitly passed.
 
 ### Static
-Static methods don't require an instance of the class. They are shared among all users of the class.
+
+Static methods don't require an instance of the class. They are shared among all
+users of the class.
 
 Static methods have two main purposes:
-1. For utility and helper methods that don't require any object state.
-2. For state that is shared by all instances of the class (methods that merely uses that state should be static as well).
 
-When accessing a static member, Java only checks reference type. This means that the object can be null, and still the static member can be accessed:
+1. For utility and helper methods that don't require any object state.
+2. For state that is shared by all instances of the class (methods that merely
+uses that state should be static as well).
+
+When accessing a static member, Java only checks reference type. This means that
+the object can be null, and still the static member can be accessed:
+
 ```java
 AClassWithStaticMembers s = null;
 s.staticMember; // OK
@@ -802,18 +986,21 @@ s.staticMember; // OK
 
 Static members cannot call an instance member.
 
-**final** variables cannot be reassigned. Primitive types cannot change value, reference types cannot point to another object. If final values are not initialized, they can be initialized in a _static initializer_.
+**final** variables cannot be reassigned. Primitive types cannot change value,
+reference types cannot point to another object. If final values are not
+initialized, they can be initialized in a _static initializer_.
 
 #### Static initializers
 
 _Static initializers_ can be the first assignment of _static final_ variables.
 Static initializers are run only once.
+
 ```java
 private static final int NUM_SEC_PER_HOUR;
 static {
-	int numSecPerMin = 60;
-	int numMinPerHour = 60;
-	NUM_SEC_PER_HOUR = numSecPerMin * numMinPerHour;
+  int numSecPerMin = 60;
+  int numMinPerHour = 60;
+  NUM_SEC_PER_HOUR = numSecPerMin * numMinPerHour;
 }
 ```
 
@@ -821,39 +1008,51 @@ static {
 
 Static imports are for importing static members of classes.
 
-Members of the class has preference; a method with the same name as the static imported one will get precedence.
+Members of the class has preference; a method with the same name as the static
+imported one will get precedence.
 
 ### Passing Data Among Methods
 
-Java is "pass-by-value". A copy of the variable is made and the method receives that copy. Assignments made in the method does not affect the caller.
-Assigning a new primitive or reference does not change the caller. Calling methods on an object does affect the caller.
+Java is "pass-by-value". A copy of the variable is made and the method receives
+that copy. Assignments made in the method does not affect the caller.
 
-Returning data from a method is done by copying the primitive of reference and returning it.
+Assigning a new primitive or reference does not change the caller. Calling
+methods on an object does affect the caller.
+
+Returning data from a method is done by copying the primitive of reference and
+returning it.
 
 ### Overloading Methods
 
 Java calls the most specific method it can.
 
-_Method overloading_ occurs when there are different method signatures with the same name but different type parameters.
+_Method overloading_ occurs when there are different method signatures with the
+same name but different type parameters.
 
-##### Overloading order:
+#### Overloading order
+
 1. Exact match by type
 2. Larger primitive type
 3. Autoboxed type
 4. Varargs
 
-**Note**: Java only converts in one step (this includes to _Object_)
-
+**Note**: Java only converts in one step.
 
 #### Varargs
-The parameter type list cannot be the same when overloading. This is also the case for varargs e.g.
-``` java
+
+The parameter type list cannot be the same when overloading. This is also the
+case for varargs e.g.
+
+```java
 public void fly(int[] numbers) { }
 public void fly(int... numbers) { } // DOES NOT COMPILE
 ```
 
 #### Autoboxing
-Autoboxing will occur if only the _Integer_ method is present, but if both are present (as below) Java will pick the most specific one.
+
+Autoboxing will occur if only the _Integer_ method is present, but if both are
+present (as below) Java will pick the most specific one.
+
 ```java
 public void fly(int number) { }
 public void fly(Integer number) { } // COMPILES
@@ -865,21 +1064,26 @@ this.fly(42) // COMPILES
 ```
 
 #### Primitives
-Java accepts wider types, otherwise explicit casting is required.
 
+Java accepts wider types, otherwise explicit casting is required.
 
 ### Creating Constructors
 
 - Creating new objects with constructors is *instantiation*.
-- A constructor is called by using the `new` keyword. When this keyword occurs, Java allocates memory for the new object on the heap.
+- A constructor is called by using the `new` keyword. When this keyword occurs,
+Java allocates memory for the new object on the heap.
 - `this` tells Java to reference an instance variable.
 
-**Note**: If there are *no* constructors present, Java generates a *default constructor* during compile step (omitted in .java, but present in .class file).
+**Note**: If there are *no* constructors present, Java generates a *default
+constructor* during compile step (omitted in .java, but present in .class file).
 
 ### Constructor overloading
-When `this` is called as a function, Java interprets it as a constructor call. `this()` has to be the first non-commented statement in the constructor.
+
+When `this` is called as a function, Java interprets it as a constructor call.
+`this()` has to be the first non-commented statement in the constructor.
 
 This can be used for *constructor chaining*
+
 ```java
 public Hamster(int weight) {
     this(weight, "brown");
@@ -897,7 +1101,6 @@ public Hamster(int weight) {
 By the time the constructor completes, all `final` instance variables must have
 been set.
 
-
 ### Order of Initialization
 
 1. *super class* if there is one
@@ -907,6 +1110,7 @@ they appear)
 4. constructor
 
 **Remark**: If the class is not initialized, only rules 1 and 2 applies.
+
 **Remark**: If object is initialized in a static initializer, the object
 initialization lands on top of the stack.
 
@@ -919,14 +1123,17 @@ public class OrderOfInit {
 }
 ```
 
-
 ### Encapsulating Data
 
 *getter* or *accessor method*.
+
 *setter* or *mutator method*.
-Java defines a naming convention that is used in *JavaBeans*. *JavaBeans* calls an instance variable a *property*.
+
+Java defines a naming convention that is used in *JavaBeans*. *JavaBeans* calls
+an instance variable a *property*.
 
 #### JavaBeans
+
 |Rule|Example|
 |:---|:---|
 | Properties are private | `private int num`|
@@ -935,26 +1142,36 @@ Java defines a naming convention that is used in *JavaBeans*. *JavaBeans* calls 
 | Setters begins with *set* | `public void setNum` |
 |The method name must have a prefix of *set*/*get*/*is*, followed by the name of the variable with first letter capital | |
 
-#### Immutable classes
-Preventing callers from changing the instance variables.
+#### Encapsulated and Immutable classes
+
+Immutability refers to preventing callers from changing the instance variables.
+
+Encapsulation refers to preventing callers from changing the instance variables
+directly.
 
 ### Writing Simple Lambdas
+
 A *lambda expression* is a block of code that is passed around.
 *Deferred execution* means the code is specified now but will be run later.
 
 Lambda syntax
+
 ```java
 a -> a.canHop()
 ```
+
 Including optional parts
+
 ```java
 (Animal a) -> {return a.canHop(); }
 ```
+
 - Parenthesis can be omitted when there is a single parameter with no explicit type.
 - Braces can be omitted when there is only one return statement.
 - When using braces, `return` and `;` is mandatory.
 
 Java doesn't allow us to redeclare local variables in lambdas
+
 ```java
 (a, b) -> {int a = 0; return 5;} // DOES NOT COMPILE
 ```
@@ -964,7 +1181,6 @@ Java doesn't allow us to redeclare local variables in lambdas
 In the package `java.util.function`.
 *ArrayList* declares `removeIf()` that takes a `Predicate`.
 
-
 ## Chapter 5: Class Design
 
 Inheritance
@@ -973,22 +1189,15 @@ Hiding
 `final`
 Abstract
 
-
 ### Interfaces
 
-- All interface methods are `public` (in Java 8) .
-	- `public` is automatically added to the signature.
-- Interface methods are assumed to be `abstract`, but `static` and `default` are allowed.
-	- `abstract` is automatically added to the signature (if not `static` or `default`).
+- All interface methods are `public` (in Java 8).
+  - `public` is automatically added to the signature. Interface methods are
+  assumed to be `abstract`, but `static` and `default` are allowed.
+  - `abstract` is automatically added to the signature (if not `static` or `default`).
 
-- a class implementing 2 interfaces with default methods with same name and signature will throw an error, but there is an exception to this rule if the implementing class makes an implementation of its own (the ambiguity for the compilator is removed).
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NzgzNDg1ODYsNDcyNTM2NjUxLC0xMT
-I0MTk5OTczLC01MDEwNjA2MTcsMjExOTM3OTQ1LDMwNzA1Mzcw
-LDM1NjQzNTA2OCwtMjMwNjc4MzIyLC0xNjk2MzUwNzcwLDE1Nz
-A3NzgxNTYsLTEwMjQxNTgzNDMsMzk5NTA4MDg5LC0zMzI1Mzky
-MDEsODQ0MDk4OTY0LDczMzEwMzU1OSwtMjE0MDAwMzY1MCwzMD
-A3ODMwNzEsLTE3MzM0ODU3OTMsLTIwODA3NDQ0NywtMTMzMzQw
-OTEzXX0=
--->
+- A class implementing 2 interfaces with default methods with same name and
+signature will throw an error, but there is an exception to this rule if the
+implementing class makes an implementation of its own (the ambiguity for the
+compilator is removed).
 
