@@ -194,6 +194,8 @@ statement). Any, or all of them can be **initialized** inline.
 **Note**: it is not allowed to *only* initialize multiple variables in the same
 statement. E.g.
 
+**Note**: it is not allowed to *only* initialize multiple variables in the same statement. E.g.
+
 ```java
 int x;
 int y;
@@ -278,9 +280,7 @@ finalize will run, and it wont run more than once.
 |:---|:---|
 |*operator* | special symbol that can be applied to operands and returns a result
 |*operand* | variable, value or literal operated on by an operator
-|*assignment operator* | binary operator that modifies, or assigns, the variable
-on the left hand side of the operator with the result of the value of the
-right-hand side
+|*assignment operator* | binary operator that modifies, or assigns, the variable on the left hand side of the operator with the result of the value of the right-hand side
 |*logical operator* | `&`, `\|`, `^`
 |*bitwise operator* | logical operators applied to numerical data types
 
@@ -302,6 +302,7 @@ Order of operation (by decreasing order of operator precedence)
 | shift operators | <<, >>, >>>
 | relational operators | <, >, <=, >=, instanceof
 | equal to/not equal to | ==, !=
+
 | logical operators | &, ^, \||
 | short-circuit logical operators | &&, \|\||
 | **ternary**
@@ -349,6 +350,13 @@ short y = 1;
 short z = x*y; // DOES NOT COMPILE
 ```
 
+Example:
+```java
+short x = 1;
+short y = 1;
+short z = x*y; // DOES NOT COMPILE
+```
+
 #### Unary Operators
 
 One operand. `+`, `-`, `++`, `--`, `!`, `~`.
@@ -360,6 +368,8 @@ int x = !5; // Does not compile
 boolean y = -true; // Does not compile
 boolean z = !0; // Does not compile
 ```
+
+**Note**: in Java *0* and *false*, *1* and *true* are not related in any way.
 
 **Note**: in Java *0* and *false*, *1* and *true* are not related in any way.
 
@@ -406,6 +416,8 @@ type.
 
 Compound assignment operators will *automatically* cast the resulting value into
 the type of the left-hand side, e.g.
+
+Compound assignment operators will *automatically* cast the resulting value into the type of the left-hand side, e.g.
 
 ```java
 long x = 10;
@@ -609,6 +621,8 @@ String b = "   Hello".trim();
 System.out.println(a == b); // false
 System.out.println(a.equals(b)); // true
 ```
+
+**Note**: If _equals()_ is not implemented, it will check for reference equality (as `==` does).
 
 **Note**: If _equals()_ is not implemented, it will check for reference equality
 (as `==` does).
