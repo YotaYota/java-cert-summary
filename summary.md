@@ -46,7 +46,8 @@
 
 - For multiple classes in the same file, at most **one** is allowed to be public.
 - A public class needs to match the filename.
-- When a file is compiled, multiple `.class` files will be created, one for each class.
+- When a file is compiled, multiple `.class` files will be created, one for each
+class.
 - The compiled class will be named *after the class*, not the file.
 - A file must have `.java` extension in order to be executed.
 - Java class files run on the JVM.
@@ -194,7 +195,8 @@ statement). Any, or all of them can be **initialized** inline.
 **Note**: it is not allowed to *only* initialize multiple variables in the same
 statement. E.g.
 
-**Note**: it is not allowed to *only* initialize multiple variables in the same statement. E.g.
+**Note**: it is not allowed to *only* initialize multiple variables in the same
+statement. E.g.
 
 ```java
 int x;
@@ -351,6 +353,7 @@ short z = x*y; // DOES NOT COMPILE
 ```
 
 Example:
+
 ```java
 short x = 1;
 short y = 1;
@@ -417,7 +420,8 @@ type.
 Compound assignment operators will *automatically* cast the resulting value into
 the type of the left-hand side, e.g.
 
-Compound assignment operators will *automatically* cast the resulting value into the type of the left-hand side, e.g.
+Compound assignment operators will *automatically* cast the resulting value into
+the type of the left-hand side, e.g.
 
 ```java
 long x = 10;
@@ -622,7 +626,8 @@ System.out.println(a == b); // false
 System.out.println(a.equals(b)); // true
 ```
 
-**Note**: If _equals()_ is not implemented, it will check for reference equality (as `==` does).
+**Note**: If _equals()_ is not implemented, it will check for reference equality
+(as `==` does).
 
 **Note**: If _equals()_ is not implemented, it will check for reference equality
 (as `==` does).
@@ -1197,21 +1202,362 @@ In the package `java.util.function`.
 
 ## Chapter 5: Class Design
 
-Inheritance
-Override
-Hiding
-`final`
-Abstract
+- Inheritance
+- Override
+- Hiding
+- `final`
+- Abstract
+
+### Classes
+
+`private` and `protected` modifiers can only be applied to inner classes.
+
+#### Constructors
+
+If a class has no parent, Java automatically adds `extends java.lang.Object`.
+
+The first call of a constructor is either a `this()`-call to another constructor
+or a `super()`-call to its parent. A no argument `super()` is inserted if none
+of these are explicitly added.
+
+```java
+public class Foo {
+  public Foo(int baz) {
+  }
+}
+
+public class Bar extends Foo {
+  public Bar() { // DOES NOT COMPILE
+  }
+}
+```
+
+The parent constructor is always executed before the child constructor.
+
+#### Inhereting Methods
+
+**Note**: `final` methods cannot be overridden nor hidden.
+
+##### Overriding a Method
+
+Methods can be overridden by declaring a new method with the same signature and
+return type as in the child class.
+
+Overridden methods can be accessed with the `super` keyword.
+
+Rules for overriding non-private methods:
+
+1. Method must have same signature.
+2. Method must be at least as accessible.
+3. Method may not throw a checked exception that is new or broader than the
+class of any exception thrown in the parent class.
+4. If returning a value, it must be the same type or a subclass of the parent's
+return value type (known as _covariant return types_).
+
+**Note**: These rules does not apply to `private` methods, since they cannot be overridden.
+
+**Note**: Without these rules, it is possible to create contradictions in the language.
+
+###### Explaing Rule 2
+
+```java
+SuperClass anInstance = new SubClass();
+anInstance.protectedMethodInSubclass(); // Contradicting ambiguity of accessability
+```
+
+###### Explaining 3
+
+```java
+public SuperClass {
+  public void method() {...}
+}
+
+public SubClass {
+  public void method() throws Exception {...}
+}
+
+SuperClass anInstance = new SubClass();
+anInstance.method(); // Contradicting ambiguity in Exception thrown
+```
+
+###### Explaining 4
+
+```java
+public SuperClass {
+  public Double method() {...}
+}
+
+public SubClass {
+  public Number method() {...}
+}
+
+static Double aFunction(SuperClass anInstance) {
+  // Contradiction if SubClass is sent as parameter and returns eg an Integer
+  return anInstance.method();
+}
+```
+
+##### Hiding Static Methods
+
+_hidden method_: a static method with same name and signature as static method
+in parent class.
+
+Rules for hiding static methods are the same above with one additional rule:
+
+5. `static` keyword must match use of static keyword in parent class (ie. a non
+static method cannot be made static and vice verca).
+
+**Note**: The child version of an overridden method is always executed,
+regardles of where the call is made from. However, the version of a hidden
+method depends on from which class it is called from.
+
+#### Inhereting Variables
+
+Java does not allow variables to be overridden, only hidden.
+
+Variables with same names as in parent class are hidden; there exists two
+versions of them.
+
+Refering to paren't version from the child class can be done with the `super` keyword.
+
+### Abstract Classes and Methods
+
+Marked with `abstract` keyword.
+
+Abstract class rules:
+
+1. Abstract classes cannot be instantiated.
+2. May include any number of abstract or nonabstract methods.
+3. May not be marked as `private`, `protected` or `final`.
+4. An abstract class extending another abstract class inherits all abstract
+methods as its own.
+5. The first _concrete class_ extending an abstract class must provide
+implementation for all abstract methods.
+
+Abstract method rules:
+
+1. Defined in an abstract class.
+2. May not be declared `private` or `final`.
+3. May not have an implementation in the abstract class.
+4. Implementing an abstract class follow the same rules as overriding.
 
 ### Interfaces
 
-- All interface methods are `public` (in Java 8).
-  - `public` is automatically added to the signature. Interface methods are
-  assumed to be `abstract`, but `static` and `default` are allowed.
-  - `abstract` is automatically added to the signature (if not `static` or `default`).
+Interfaces are by definition `abstract`.
 
-- A class implementing 2 interfaces with default methods with same name and
-signature will throw an error, but there is an exception to this rule if the
-implementing class makes an implementation of its own (the ambiguity for the
-compilator is removed).
+A class invokes an interface by using the `implements` keyword.
+
+Rules for defining an interface:
+
+1. Interfaces cannot be instantiated directly.
+2. Interfaces may have any number of methods.
+3. Interfaces may not be declared as `final`.
+4. Top-level interfaces are `abstract` by definition (thus `private`,
+`protected` and `final` methods result in compiler error).
+5. Methods (except `static` and `default`) are assumed to be `public` and
+`abstract` by default (marking these with `private`, `protected` or `final`
+will trigger compiler error).
+
+**Note**: An interface `extends` another interface (it does not `implements` them).
+
+#### Default Methods
+
+`default` methods are not `abstract`.
+
+- `public`.
+- Cannot be marked as `static`.
+- Requires an implementation.
+
+**Note**: and interface or abstract class may redeclare a `default` method and
+mark it as `abstract` (without implementation).
+
+#### Static Methods
+
+`static` interface methods are not `abstract`.
+
+**Note**: `static` interface methods are not inherited by classes implementing
+the interface (to reference a static interface method, the name of the interface
+must be used).
+
+#### Interface Variables
+
+Interface variables are `public`, `static` and `final`.
+
+### Polymorphism
+
+Polymorphism in Java is that an object may be accessed using a reference of
+
+- the object's type,
+- a superclass' type
+- an implemented interface's type (even through a superclass)
+
+The object is the entity that exist in the memory, allocated by the JRE.
+Regardless of what type the reference has, the object does not change. However,
+the type of reference changes what variables and methods are accesible.
+
+#### Casting
+
+Access to variables and methods can be regained if explicitly casting the object.
+
+Rules for casting:
+
+1. Casting from subclass to superclass does not require explicit cast.
+2. Casting from superclass to subclass does require explicit cast.
+3. The compiler does not allow casts to unrelated types.
+4. Even if the code compiles, an exception may be thrown at runtime if the
+object being cast is not actually an instance of that class.
+
+**Note**: Illegal castings will generate `ClassCastException` at runtime.
+
+#### Virtual Methods
+
+_virtual method_: A method where the implementation is not determined until runtime.
+
+**Note**: All non-`final`, non-`static`, non-`private` are considered virtual
+since they can be overridden at runtime.
+
+#### Polymorphic Parameters
+
+The ability to pass instances of a subclass or interface to a method.
+
+## Chapter 6: Exceptions
+
+An Exception is an event that alters the program flow.
+
+There are two possibilities in dealing with exceptions in Java
+
+1. A method can handle the exception on it's own.
+2. A method makes it the caller's responsibility to handle the exception.
+
+Java has a `Throwable` superclass for all objects that alter program flow in
+this aspect.
+
+- `java.lang.Throwable`
+  - `java.lang.Exception`
+    - `java.lang.RunTimeException`
+  - `java.lang.Error`
+
+### Errors
+
+Subclasses of `java.lang.Error` are thrown by the JVM and should not be handled
+or declared.
+
+Common errors:
+| **Error** ||
+|:--|:--|
+|`ExceptionInInitializerError`|static initializer throws unhandled exception|
+|`StackOverflowError`|a method calls itself too many times|
+|`NoClassDefFoundError`|class used is available at compile time but not runtime|
+
+### Exceptions
+
+A `RunTimeException` and its subclasses is also known as an _unchecked exception_.
+
+An `Exception` (but not a `RunTimeException`) is also known as an _checked exception_.
+
+The `throw` keyword tells Java that another part of the code should take care of
+the exception.
+
+|**Type**|**Okay to catch?**|**Required to catch?**|
+|:--|:--|:--|
+|RunTimeException|Yes|No|
+|Checked Exception|Yes|Yes|
+|Error|No|No|
+
+#### Checked Exceptions
+
+_handle or declare rule_: Java requires the code to either handle them or
+declare them in the method signature.
+
+```java
+void fall() throws Exception {
+  throw new Exception();
+}
+```
+
+Common checked exceptions:
+
+| **Exception** | **Thrown by** ||
+|:--|:--|:--|
+| `FileNotFoundException` | Programmer | subclass of `IOException`|
+| `IOException` | Programmer ||
+
+#### Unchecked Exceptions (`RunTimeException`)
+
+Common unchcked exceptions:
+
+|**Exception**|**Thrown by**||
+|:--|:--|:--|
+| `ArithmeticException` | JVM ||
+| `ArrayIndexOutOfBoundsException` | JVM ||
+| `ClassCastException` | JVM ||
+| `IllegalArgumentException` | Programmer ||
+| `NullPoinerException` | JVM ||
+| `NumberFormatException` | Programmer | subclass of `IllegalArgumentException`|
+
+#### Try-Catch-Finally Statement
+
+Try statements separates the logic that might throw an exception from the logic
+that handles that exception.
+
+```java
+try {
+  // protected code
+} catch (exception_type identifier) {
+  // exception handler
+} catch (exception_type_2 identifier) {
+  // exception handler
+}
+...
+} finally {
+  // will always execute
+}
+```
+
+**Note**: A `try` statement requires `catch` and/or `finally`. Both is not
+required, but `catch` is required to come before `finally`.
+
+**Note**: Code in `finally` always executes, regardless of wether an exception
+was thrown. If no exeption is thrown, the `finally` clasue is run after the
+`try` clause. If the an exception is thrown, the `finally` clause is run after
+the `catch` clause.
+
+**Note**: There is one exception to the rule above: if `System.exit(0);` is invoked.
+
+**Note**: Wrapping code in a try-catch block that does not throw an exception
+will not compile.
+
+The code below hides the `RunTimeException` thrown from the `catch` clause.
+Since `finally` is run afterwards and throws an `Exception`, the
+`RunTimeException` is forgotten.
+
+```java
+try {
+  throw new RunTimeException();
+catch (RunTimeException e) {
+  thrown new RunTimeException();
+} finally {
+  throw new Exception();
+}
+```
+
+##### Chaining Catch Statements
+
+`catch` blocks are evaluated in order. At most one can be executed.
+
+A `catch` statement catching a superclass before a subclass is not allowed. This
+generates a compiler error for unreachable code.
+
+#### Subclasses
+
+When implementing or overriding methods, it is not allowed to add new checked
+exceptions to the method signature.
+
+A subclass is allowed to declare fewer exception that the superclass or interface.
+
+An overridden or implemented methods is allowed to declare a subclass of a
+checked exception type.
+
+**Note**: Declaring a new `RunTimeException` is legal (since it's redundant;
+unchecked exceptions are not required to be declared)
 
