@@ -416,8 +416,8 @@ Numeric *overflow* is when the number is too large to be stored in the data
 type. There is also an *underflow* when the number is too low to fit in the data
 type.
 
-Compound assignment operators will *automatically* cast the resulting value into
-the type of the left-hand side, e.g.
+**Note**: Compound assignment operators will *automatically* cast the resulting
+value into the type of the left-hand side, e.g.
 
 ```java
 long x = 10;
@@ -625,9 +625,6 @@ System.out.println(a.equals(b)); // true
 **Note**: If _equals()_ is not implemented, it will check for reference equality
 (as `==` does).
 
-**Note**: If _equals()_ is not implemented, it will check for reference equality
-(as `==` does).
-
 **Note**: if `x.equals(y)` then `x.hashCode()` must equal `y.hashCode()`.
 
 ### Understanding Java Arrays
@@ -636,8 +633,8 @@ System.out.println(a.equals(b)); // true
 import java.util.Arrays;
 ```
 
-An array is an area of memory on the heap with space for a fixed number of elements.
-An array is a reference variable, even if it is an array of primitives.
+- An array is an area of memory on the heap with space for a *fixed number* of elements.
+- An array is a *reference variable*, even if it is an array of primitives.
 
 Ways of creating an array:
 
@@ -646,16 +643,17 @@ int[] numbers;
 int [] numbers;
 int numbers[];
 int numbers [];
+int[] numbers = new int[2];
 // One way of initiating with values
 int[] numbers = {42, 3, 11};
 ```
 
-The _equals()_ method on arrays uses reference equality, it does not look at the
-elements of the array.
+**Note**: The _equals()_ method on arrays uses reference equality, it does not
+look at the elements of the array.
 
 #### Sorting
 
-Use _Arrays.sort()_.
+Use `Arrays.sort()`.
 
 **Note**: Strings sorts numbers before letters, and uppercase before lowercase.
 
@@ -684,7 +682,7 @@ int[] vars1[], vars2[][] //2D and 3D
 ```
 
 ```java
-String[][] rectancgle = new String[3][2];
+String[][] rectangle = new String[3][2];
 ```
 
 Multidimensional arrays can be initialized with the **new operator** or an
@@ -698,7 +696,8 @@ int[][] ints = new int[][] {{1, 2},{3, 4}};
 
 **Note**: When initializing a multidimensional array, the size of the first
 dimension must be provided. The dimensions of other dimensions are not required
-but a declaration in size cannot be preceded by an empty brackets.
+but a declaration in size cannot be preceded by an empty brackets. (Size of an
+array is fixed, so it must be guaranteed that next array fits in the previous).
 
 ```java
 int[][][] ints3d = new int[3][2][]; // COMPILES
