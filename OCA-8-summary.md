@@ -104,14 +104,14 @@ example in JAR files (JARs are like zip files containing mostly Java class files
 
 | Keyword | Type |
 | :--- | :--- |
-| *boolean* | true or false |
-| *byte* | 8-bit integral value |
-| *short* | 16-bit integral value |
-| *int* | 32-bit integral value |
-| *long* | 64-bit integral value |
-| *float* | 32-bit floating-point value |
-| *double* | 64-bit floating-point value |
-| *char* | 16-bit Unicode value |
+| `boolean` | true or false |
+| `byte` | 8-bit integral value |
+| `short` | 16-bit integral value |
+| `int` | 32-bit integral value |
+| `long` | 64-bit integral value |
+| `float` | 32-bit floating-point value |
+| `double` | 64-bit floating-point value |
+| `char` | 16-bit Unicode value |
 
 - primitive types defaults to 0 in their respective type.
 - Even `char` is promoted to `int`
@@ -304,7 +304,6 @@ Order of operation (by decreasing order of operator precedence)
 | shift operators | <<, >>, >>>
 | relational operators | <, >, <=, >=, instanceof
 | equal to/not equal to | ==, !=
-
 | logical operators | &, ^, \||
 | short-circuit logical operators | &&, \|\||
 | **ternary**
