@@ -304,12 +304,12 @@ Order of operation (by decreasing order of operator precedence)
 | shift operators | `<<`, `>>`, `>>>`
 | relational operators | `<`, `>`, `<=`, `>=`, `instanceof`
 | equal to/not equal to | `==`, `!=`
-| logical operators | `&`, `^`, `|`|
-| short-circuit logical operators | `&&`, `||`|
+| logical operators | `&`, `^`, `\|`|
+| short-circuit logical operators | `&&`, `\|\|`|
 | **ternary**
 | ternary operators | `boolean expression ? expression1 : expression2`
 | **assignment**
-| assignment operators | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `|=`, `<<=`, `>>=`, `>>>=`
+| assignment operators | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `\|=`, `<<=`, `>>=`, `>>>=`
 
 **Note**: If two operators have the same level of precedence, Java guarantees
 **left-to-right evaluation**.
