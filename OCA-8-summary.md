@@ -295,21 +295,21 @@ Order of operation (by decreasing order of operator precedence)
 | Operator | Symbols and examples |
 |:---|:---|
 | **unary**
-| post-unary operators | expression++, expression-\-
-| pre-unary operators | ++expression, --expression
-| other unary operators | ~, +, -, !
+| post-unary operators | `expression++`, `expression--`
+| pre-unary operators | `++expression`, `--expression`
+| other unary operators | `~`, `+`, `-`, `!`
 | **binary**
-| multiplication/division/modulus | \*, /, %
-| addition/subtraction | +, -
-| shift operators | <<, >>, >>>
-| relational operators | <, >, <=, >=, instanceof
-| equal to/not equal to | ==, !=
-| logical operators | &, ^, \||
-| short-circuit logical operators | &&, \|\||
+| multiplication/division/modulus | `*`, `/`, `%`
+| addition/subtraction | `+`, `-`
+| shift operators | `<<`, `>>`, `>>>`
+| relational operators | `<`, `>`, `<=`, `>=`, `instanceof`
+| equal to/not equal to | `==`, `!=`
+| logical operators | `&`, `^`, `|`|
+| short-circuit logical operators | `&&`, `||`|
 | **ternary**
-| ternary operators | boolean expression ? expression1 : expression2
+| ternary operators | `boolean expression ? expression1 : expression2`
 | **assignment**
-| assignment operators | =, +=, -=, \*=, /=, %=, &=, ^=, \|=, <<=, >>=, >>>=
+| assignment operators | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `|=`, `<<=`, `>>=`, `>>>=`
 
 **Note**: If two operators have the same level of precedence, Java guarantees
 **left-to-right evaluation**.
