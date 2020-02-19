@@ -38,9 +38,9 @@
 
 ### Comments
 
-- single-line comment (//)
-- multiple-line comment (/* ... */)
-- Javadoc comment (/** ... */)
+- single-line comment (`//`)
+- multiple-line comment (`/* ... */`)
+- Javadoc comment (`/** ... */`)
 
 ### Files
 
@@ -104,14 +104,14 @@ example in JAR files (JARs are like zip files containing mostly Java class files
 
 | Keyword | Type |
 | :--- | :--- |
-| boolean | true or false |
-| byte | 8-bit integral value |
-| short | 16-bit integral value |
-| int | 32-bit integral value |
-| long | 64-bit integral value |
-| float | 32-bit floating-point value |
-| double | 64-bit floating-point value |
-| char | 16-bit Unicode value |
+| *boolean* | true or false |
+| *byte* | 8-bit integral value |
+| *short* | 16-bit integral value |
+| *int* | 32-bit integral value |
+| *long* | 64-bit integral value |
+| *float* | 32-bit floating-point value |
+| *double* | 64-bit floating-point value |
+| *char* | 16-bit Unicode value |
 
 - primitive types defaults to 0 in their respective type.
 - Even `char` is promoted to `int`
@@ -139,10 +139,13 @@ float x = 2.1; // Does not compile
 float x = 2.1f; // Compiles
 ```
 
-- Java accepts other number formats:
-  - octal [0-7]. **0** as prefix (e.g. `017`).
-  - hexadecimal [0-9, A-F]. **0x** or **0X** as prefix (e.g.`0xFF`).
-  - binary [0-1]. **0b** or **0B** as prefix (e.g. `0b10`).
+Java accepts other number formats:
+
+|Name|Range|Prefix|Example|
+|:--|:--|:--|:--|
+|octal|[0-7]| **0**|`017`|
+|hexadecimal| [0-9, A-F]| **0x** or **0X** |`0xFF`|
+|binary| [0-1]| **0b** or **0B** |`0b10`|
 
 - Java allows underscores in literals, but not in the beginning, end or next to
 a decimal point.
@@ -191,9 +194,6 @@ Multiple variables can be declared and initialized in the same statement.
 Many variables can be **declared** in the same statement, provided they are of
 the same type (however, type is only allowed to be declared once for each
 statement). Any, or all of them can be **initialized** inline.
-
-**Note**: it is not allowed to *only* initialize multiple variables in the same
-statement. E.g.
 
 **Note**: it is not allowed to *only* initialize multiple variables in the same
 statement. E.g.
@@ -416,9 +416,6 @@ short y = (short) 1921222; // Stored as 20678 (numeric overflow)
 Numeric *overflow* is when the number is too large to be stored in the data
 type. There is also an *underflow* when the number is too low to fit in the data
 type.
-
-Compound assignment operators will *automatically* cast the resulting value into
-the type of the left-hand side, e.g.
 
 Compound assignment operators will *automatically* cast the resulting value into
 the type of the left-hand side, e.g.
