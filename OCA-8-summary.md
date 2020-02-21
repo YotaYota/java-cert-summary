@@ -351,13 +351,7 @@ short y = 1;
 short z = x*y; // DOES NOT COMPILE
 ```
 
-Example:
-
-```java
-short x = 1;
-short y = 1;
-short z = x*y; // DOES NOT COMPILE
-```
+**Note**: Compound assignment will automatically cast value to the variable's type.
 
 #### Unary Operators
 
@@ -370,8 +364,6 @@ int x = !5; // Does not compile
 boolean y = -true; // Does not compile
 boolean z = !0; // Does not compile
 ```
-
-**Note**: in Java *0* and *false*, *1* and *true* are not related in any way.
 
 **Note**: in Java *0* and *false*, *1* and *true* are not related in any way.
 
@@ -921,15 +913,15 @@ public final void nap(int minutes) throws InterruptedException {}
 
 |Element|Example|Required|
 |:---|:---|:---|
-|access modifier| `public` |N>|
-|optional specifier| `final` |N>|
-|return type| `void` |Y>|
+|access modifier| `public` |N|
+|optional specifier| `final` |N|
+|return type| `void` |Y|
 |method name| |Y|
 |parameter list| |Y|
-|exception| `throws InterruptedException` |N>|
+|exception| `throws InterruptedException` |N|
 |method body| `{}` |Y|
 
-**Note**: optional specifiers are allowed to come before access modifier.
+**Note**: Optional specifiers are allowed to come before access modifier.
 
 ### Access Modifiers
 
@@ -1000,7 +992,7 @@ s.staticMember; // OK
 
 Static members cannot call an instance member.
 
-**final** variables cannot be reassigned. Primitive types cannot change value,
+`final` variables cannot be reassigned. Primitive types cannot change value,
 reference types cannot point to another object. If final values are not
 initialized, they can be initialized in a _static initializer_.
 
