@@ -649,7 +649,7 @@ look at the elements of the array.
 **Note**: When using array initilizer to create an array, it must be used in declatation.
 
 ```java
-in[] numbers;
+int[] numbers;
 numbers = {42, 3, 11}; // DOES NOT COMPILE
 ```
 
