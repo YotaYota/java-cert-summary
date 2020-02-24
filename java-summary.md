@@ -79,14 +79,16 @@ java.util.Date
 java.sql.* //java.sql.Date is omitted
 ```
 
-Ambiguity gives compiler error:
+Import ambiguity is ok, but when ambiguity occurs when referencing it result in
+compiler error.
 
 ```java
 java.util.*
-java.sql.*
+java.sql.* // OK
+Date date = new Date(); // Compiler error
 ```
 
-If both needs to be used, the fully qualified name can be used without an import.
+If both needs to be used, the fully qualified name can be used.
 
 ##### Compilation
 
@@ -195,7 +197,7 @@ Many variables can be **declared** in the same statement, provided they are of
 the same type (however, type is only allowed to be declared once for each
 statement). Any, or all of them can be **initialized** inline.
 
-**Note**: it is not allowed to *only* initialize multiple variables in the same
+**Note**: It is not allowed to *only* initialize multiple variables in the same
 statement. E.g.
 
 ```java
@@ -486,6 +488,7 @@ are the same, rather than if they are equivalent.
     - *char*, *Character*
     - *String*
     - *enum*
+    - **Note**: *double* and *float* is **not** allowed.
   - target variable is evaluated at runtime
   - cases needs to be compile-time constants of the same data type as the switch
   value (literals, enum constants, or final keyword).
@@ -643,6 +646,13 @@ int[] numbers = {42, 3, 11};
 **Note**: The _equals()_ method on arrays uses reference equality, it does not
 look at the elements of the array.
 
+**Note**: When using array initilizer to create an array, it must be used in declatation.
+
+```java
+in[] numbers;
+numbers = {42, 3, 11}; // DOES NOT COMPILE
+```
+
 #### Sorting
 
 Use `Arrays.sort()`.
@@ -747,6 +757,8 @@ All pairs have methods on the pattern of
 
 **Note**: the _Character_ class does not participate in _parse/valueOf_ methods
 since _String_ is made up of multiple _char_.
+
+**Note**: increment and decrement operator works on wrapper classes.
 
 #### Autoboxing
 
@@ -1112,7 +1124,7 @@ been set.
 1. *super class* if there is one
 2. *static variable declarations* and *static initilizers* (in the order they appear)
 3. *instance variable declarations* and *instance initializers* (in the order
-they appear)
+they appear; they are copied to beginning of the constructor)
 4. constructor
 
 **Remark**: If the class is not initialized, only rules 1 and 2 applies.
@@ -1203,6 +1215,10 @@ In the package `java.util.function`.
 
 If a class has no parent, Java automatically adds `extends java.lang.Object`.
 
+If a class has no constructor, Java automatically adds a no-argument
+constructor (this constructor will contain a no-argument `super()` call). The
+added constructor will have the same visibility as the class.
+
 The first call of a constructor is either a `this()`-call to another constructor
 or a `super()`-call to its parent. A no argument `super()` is inserted if none
 of these are explicitly added.
@@ -1248,6 +1264,7 @@ return value type (known as _covariant return types_).
 ###### Explaing Rule 2
 
 ```java
+// other package
 SuperClass anInstance = new SubClass();
 anInstance.protectedMethodInSubclass(); // Contradicting ambiguity of accessability
 ```
@@ -1366,6 +1383,18 @@ mark it as `abstract` (without implementation).
 the interface (to reference a static interface method, the name of the interface
 must be used).
 
+#### Private Methods
+
+Since Java 9, `private` and `private static` methods are allowed.
+
+Rules for private methods in interfaces:
+
+1. `private` cannot be `abstract` (requires a body).
+2. `private` methods can only be used inside the interface.
+3. `private static` methods can be used inside other static and non-static
+interface methods.
+4. `private` non-static methods cannot be used inside private static methods.
+
 #### Interface Variables
 
 Interface variables are `public`, `static` and `final`.
@@ -1381,6 +1410,15 @@ Polymorphism in Java is that an object may be accessed using a reference of
 The object is the entity that exist in the memory, allocated by the JRE.
 Regardless of what type the reference has, the object does not change. However,
 the type of reference changes what variables and methods are accesible.
+
+```java
+class Foo {}
+
+class Bar extends Foo {
+  Foo foo = new Foo();
+  Bar bar = (Bar) foo; // ClassCastException. Does not give access to Bar
+}
+```
 
 #### Casting
 
