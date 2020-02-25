@@ -11,14 +11,14 @@
 |*keyword* | word with special meaning (e.g. `public`, `class`)
 |*access modifier* | declare level of exposure (e.g. `public`, `private`)
 |*parameter* | sent into method
-|*method signature* | full declaration of method
+|*method signature* | method name and parameter list
 |*code block* | code between braces ({code})
 |*instance initializer* | code blocks that appear outside methods
 |*numeric literal* | a number that occurs in code
 |*variable* | name of a piece of memory that stores data
-| *local variable* | defined inside a method
-| *instance variable* | field
-| *class variable* | variable with static keyword in initialization
+|*local variable* | defined inside a method
+|*instance variable* | field
+|*class variable* | variable with static keyword in initialization
 
 ### Java keywords
 
@@ -314,7 +314,8 @@ Order of operation (by decreasing order of operator precedence)
 | assignment operators | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `\|=`, `<<=`, `>>=`, `>>>=`
 
 **Note**: If two operators have the same level of precedence, Java guarantees
-**left-to-right evaluation**.
+**left-to-right evaluation**. Except for assignment operators which evaluates
+from **right-to-left**.
 
 **Note**: Order of precedence can be overridden by parenthesis.
 
@@ -344,6 +345,9 @@ automatically promote the integral value to the floating-point's data type.
 them are `int`).
 4. After all promotion has occurred and the operands have the same data type,
 the resulting value will have the same data type as its promoted operands.
+
+**Note**: Floating-point literals are `double` by default, assigning them to a
+`float` without casting gives a compile time error.
 
 Example:
 
@@ -1572,6 +1576,13 @@ catch (RunTimeException e) {
 
 A `catch` statement catching a superclass before a subclass is not allowed. This
 generates a compiler error for unreachable code.
+
+When a catch block specifies multiple exception types, these types must be
+disjoint and the variable is implicitly `final`.
+
+```java
+catch (Exception | IOException e) { // DOES NOT COMPILE
+```
 
 #### Subclasses
 
