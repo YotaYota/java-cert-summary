@@ -711,6 +711,31 @@ int[][][] ints3d = new int[][][] // DOES NOT COMPILE
 int[][][] ints3d = new int[][][3] // DOES NOT COMPILE
 ```
 
+### Understanding a List
+
+List is an interface implemented by e.g. ArrayList.
+
+The static factory methods
+
+- `List.copyOf()`
+- `List.of()`
+
+returns an _unmodifiable_ list, with properties
+
+- Cannot add, replace or remove elements (UnsupportedOperationException).
+- Disallow `null` elements (generating NullPointerException).
+- Serializable if all elements are.
+- Identity-based operations are unstable and should be avoided (`==`, hash code,
+synchronization).
+
+The methods
+
+`toArray()`
+`toArray(T[] a)`
+
+returns an array either of type `Object[]` or of type `T[]`. The returned array
+will be "safe" in that no references to it are maintained by this list.
+
 ### Understanding an ArrayList
 
 ```java
@@ -760,7 +785,8 @@ All pairs have methods on the pattern of
 - _Integer.valueOf()_ returns wrapper class.
 
 **Note**: the _Character_ class does not participate in _parse/valueOf_ methods
-since _String_ is made up of multiple _char_.
+since _String_ is made up of multiple _char_. However, _String.valueOf()_ exists
+which uses the _toString()_ method in case an object is passed.
 
 **Note**: increment and decrement operator works on wrapper classes.
 
@@ -1250,6 +1276,9 @@ The parent constructor is always executed before the child constructor.
 Methods can be overridden by declaring a new method with the same signature and
 return type as in the child class.
 
+Overriding is performed at runtime, meaning that which method is called is
+decided by the object being referred to (not the type of the reference variable).
+
 Overridden methods can be accessed with the `super` keyword.
 
 Rules for overriding non-private methods:
@@ -1260,6 +1289,8 @@ Rules for overriding non-private methods:
 class of any exception thrown in the parent class.
 4. If returning a value, it must be the same type or a subclass of the parent's
 return value type (known as _covariant return types_).
+
+**Note**: Only methods can be overridden. Variables are _hidden_.
 
 **Note**: These rules does not apply to `private` methods, since they cannot be overridden.
 
@@ -1315,7 +1346,7 @@ Rules for hiding static methods are the same above with one additional rule:
 5. `static` keyword must match use of static keyword in parent class (ie. a non
 static method cannot be made static and vice verca).
 
-**Note**: The child version of an overridden method is always executed,
+**Note**: The child version of an _overridden_ method is always executed,
 regardles of where the call is made from. However, the version of a hidden
 method depends on from which class it is called from.
 
@@ -1521,7 +1552,7 @@ Common unchcked exceptions:
 | `ArrayIndexOutOfBoundsException` | JVM ||
 | `ClassCastException` | JVM ||
 | `IllegalArgumentException` | Programmer ||
-| `NullPoinerException` | JVM ||
+| `NullPointerException` | JVM ||
 | `NumberFormatException` | Programmer | subclass of `IllegalArgumentException`|
 
 #### Try-Catch-Finally Statement
