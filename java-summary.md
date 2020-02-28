@@ -588,6 +588,12 @@ There are 3 ways to create a _StringBuilder_:
 - _new StringBuilder("some string");_
 - _new StringBuilder(10);_
 
+**Note**: StringBuilder does not override _equals()_, hence reference equality
+is default.
+
+**Note**: _StringBuilder_ is initialized with 16 capacity by default. When
+initializing with String, the length of the string is added to that.
+
 #### Important StringBuilder methods
 
 - _charAt()_, _indexOf()_, _length()_, _substring()_
@@ -1358,6 +1364,8 @@ Variables with same names as in parent class are hidden; there exists two
 versions of them.
 
 Refering to paren't version from the child class can be done with the `super` keyword.
+
+**Note**: Hidden variables does not need to be of the same type as the one it's hiding.
 
 ### Abstract Classes and Methods
 
