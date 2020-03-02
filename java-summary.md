@@ -66,7 +66,7 @@ To **create** *.jar* files, use the `jar` command.
 The `jar` command has several flags
 
 | flag ||
-|--|--|--|--|--|
+|:--|:--|
 | `-c` or `--create` | creates a new JAR file |
 | `-v` or `--verbose` | |
 | `-f <fileName>` or `--file <fileName>` | JAR filename |
