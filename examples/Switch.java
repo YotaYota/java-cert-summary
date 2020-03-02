@@ -1,6 +1,4 @@
 import static java.lang.System.out;
-import java.util.*;
-import java.util.List;
 
 class Switch {
   public static void main(String[] args) {
