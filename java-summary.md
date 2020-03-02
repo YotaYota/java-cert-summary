@@ -1,4 +1,6 @@
-# OCA Sybex Notes
+# OCP Java SE 11 Programmer I Summary
+
+1Z0-815
 
 ## Chapter 1: Java Building Blocks
 
@@ -12,7 +14,7 @@
 |*access modifier* | declare level of exposure (e.g. `public`, `private`)
 |*parameter* | sent into method
 |*method signature* | method name and parameter list
-|*code block* | code between braces ({code})
+|*code block* | code between braces (`{code}`)
 |*instance initializer* | code blocks that appear outside methods
 |*numeric literal* | a number that occurs in code
 |*variable* | name of a piece of memory that stores data
@@ -42,7 +44,42 @@
 - multiple-line comment (`/* ... */`)
 - Javadoc comment (`/** ... */`)
 
-### Files
+### Running and Compiling
+
+Java files are compiles with `javac` command. `java` is used to run a *.class* file.
+
+- `-d` flag can be used to put generated *.class* files in a target directory.
+- `-cp`, `-classpath` or `--class-path` can be used to specify the classpath.
+
+#### JAR files
+
+A **Java archive** (JAR) is like a zip file containing mainly *.class* files.
+
+To **include** *.jar* files, they should be included in the class path, e.g.
+
+```sh
+java -cp ".:/tmp/someLocation/*:/tmp/someOtherLocation:/tmp/myJar.jar" myPackage.myClass
+```
+
+To **create** *.jar* files, use the `jar` command.
+
+The `jar` command has several flags
+
+| flag ||
+|--|--|--|--|--|
+| `-c` or `--create` | creates a new JAR file |
+| `-v` or `--verbose` | |
+| `-f <fileName>` or `--file <fileName>` | JAR filename |
+| `-C <directory>` | directory containing files to be used to create JAR |
+
+#### single-file source-code
+
+A program can be compiled and run directly with the `java` command if
+
+- it is entirely contained in **one** file, and
+- it does not use any non-JDK *.class* files.
+
+#### Files
 
 - For multiple classes in the same file, at most **one** is allowed to be public.
 - A public class needs to match the filename.
@@ -63,6 +100,7 @@ programmer's code.
 
 - Java put classes in *packages*.
 - Import statements tell Java which packages to look in for classes.
+- packages beginning with java or javax comes with the JDK
 - Naming rules are the same as for variable names.
 - Wildcard imports `.*` imports all classes in package, but not in child packages.
 - Only one wildcard can be used, and it must be used at the end of the line
