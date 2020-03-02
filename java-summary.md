@@ -387,7 +387,7 @@ the resulting value will have the same data type as its promoted operands.
 **Note**: Floating-point literals are `double` by default, assigning them to a
 `float` without casting gives a compile time error.
 
-Example:
+Example of rule 3:
 
 ```java
 short x = 1;
@@ -530,7 +530,7 @@ are the same, rather than if they are equivalent.
     - *char*, *Character*
     - *String*
     - *enum*
-    - **Note**: *double* and *float* is **not** allowed.
+    - **Note**: *double*, *float* and *long* is **not** allowed.
   - target variable is evaluated at runtime
   - cases needs to be compile-time constants of the same data type as the switch
   value (literals, enum constants, or final keyword).
@@ -694,7 +694,7 @@ int[] numbers = {42, 3, 11};
 **Note**: The _equals()_ method on arrays uses reference equality, it does not
 look at the elements of the array.
 
-**Note**: When using array initilizer to create an array, it must be used in declatation.
+**Note**: When using array initilizer to create an array, it must be used in declaration.
 
 ```java
 int[] numbers;
@@ -718,6 +718,14 @@ not found, binarySearch will give the element where it should be inserted to
 remain sorted as _-(indexToInsertAt + 1)_ (negative for not found, and minus one
 in order to omit 0 index).
 - Binary search can only be used on a sorted array, otherwise it is unpredictable.
+
+#### Arrays.compare
+
+*Arrays.compare(array1, array2)* compares each element at a time.
+
+- If array1 and array2 are equal it returns 0.
+- If an element at the same postion is greater in array1, a positive number will be returned.
+- If an element at the same position is greater in array2, a negative number will be returned.
 
 ### Multidimensional Arrays
 
