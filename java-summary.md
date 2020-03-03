@@ -138,7 +138,7 @@ Compilation will create a class file in respective directory.
 Location of other files can also be explicitly specified using a class path. For
 example in JAR files (JARs are like zip files containing mostly Java class files).
 
-### Primitive Types and Reference Types
+### Primitive Types, Reference Types and Literals
 
 #### Primitive types
 
@@ -146,16 +146,17 @@ example in JAR files (JARs are like zip files containing mostly Java class files
 | :--- | :--- |
 | `boolean` | true or false |
 | `byte` | 8-bit integral value |
-| `short` | 16-bit integral value |
+| `short` | 16-bit integral value (signed) |
 | `int` | 32-bit integral value |
 | `long` | 64-bit integral value |
 | `float` | 32-bit floating-point value |
 | `double` | 64-bit floating-point value |
-| `char` | 16-bit Unicode value |
+| `char` | 16-bit Unicode value (unsigned)|
 
-- primitive types defaults to 0 in their respective type.
-- Even `char` is promoted to `int`
-- To calculate the range of a primitive type, take 2 to the power of bits and
+- Primitive types defaults to 0 in their respective type(except for local variables).
+- Even `char` is promoted to `int`.
+
+To calculate the range of a primitive type, take 2 to the power of bits and
 divide by 2 to account for negative numbers, and subtract 1 to account for 0
 (which is taken from positive numbers). E.g a `byte` can hold a value from -128
 to 127. 1 `byte` = 8 `bits`.:
@@ -164,20 +165,24 @@ to 127. 1 `byte` = 8 `bits`.:
 max(1 byte) = 2^8/2 - 1 = 127.
 ```
 
-- When a literal occurs, Java assumes it is an `int` by default. E.g.
+#### Literals
+
+- When a literal *integer* occurs, Java assumes it is an `int` by default. E.g.
 
 ```java
 long max = 3123456789; // Does not compile because literal is too large for int
 long max = 3123456789L; // Compiles
 ```
 
-- When a floating-point literal occurs, Java assumes it is a `double` by
+- When a *floating-point* literal occurs, Java assumes it is a `double` by
 default. E.g.
 
 ```java
 float x = 2.1; // Does not compile
 float x = 2.1f; // Compiles
 ```
+
+**Note**: `short s = 1;` compiles while `float f = 1.0;` does not.
 
 Java accepts other number formats:
 
@@ -244,6 +249,17 @@ int y;
 x = 1, y = 1; // Does not compile
 ```
 
+### `var`
+
+- Used as local variable.
+- Cannot be used in constructor parameters, method parameters, instance variables, or class variables
+- Always initialized on the same line as it is declared.
+- Value can change, but not type.
+- Cannot be initialized with a `null` value without a type.
+- `var` is not allowed in a multiple-variable declaration.
+- `var` is a reserved type name, but not a reserved word. Meaning it cannot be used to define a type.
+(E.g `var var = "string";` compiles).
+
 ### Identifiers
 
 These three rules apply to everything the programmer is free to name (e.g.
@@ -260,19 +276,19 @@ larger scope than the method they are defined in. In scope from declaration to
 end of block.
 - *Instance variables* are also known as fields. In scope from declaration until
 object is garbage collected.
-- *Class variables* are variables with the static keyword. In scope from
+- *Class variables* are variables with the `static` keyword. In scope from
 declaration until program ends.
 
-Local variables must be initialized before used. Instance variables and class
-variables are assigned a default value:
+**Note**: Local variables must be initialized before used. Instance variables
+and class variables are assigned a default value:
 
 | Variable type | Default initialization value |
 |:---|:---|
-| boolean | false |
-| byte, short, int, long | 0 (in the type's bit-length) |
-| float, double | 0.0 (in the type's bit-length) |
-| char | '\u0000' (NUL) |
-| All object references | null |
+| boolean | `false` |
+| byte, short, int, long | `0` (in the type's bit-length) |
+| float, double | `0.0` (in the type's bit-length) |
+| char | `'\u0000'` (NUL) |
+| All object references | `null` |
 
 ### Order of Elements in Class
 
@@ -290,6 +306,7 @@ variables are assigned a default value:
 
 All Java objects are stored in the program's memory *heap* (*free store*);
 memory allocated to the Java program.
+
 `System.gc()` is not guaranteed to run. It might be ignored by Java.
 
 An object will remain on the heap until it is no longer reachable. An object is
@@ -302,8 +319,10 @@ no longer reachable if anyone of the following occurs:
 
 Objects may implement `finalize()` which gets called when the garbage collector
 tries to collect the object. But if the garbage collector fails the first time,
-it won't call finalize() the second time. All in all, there is no guarantee that
+it won't call `finalize()` the second time. All in all, there is no guarantee that
 finalize will run, and it wont run more than once.
+
+`finalize()` was deprecated in Java 9.
 
 ### Benefits of Java
 
@@ -337,7 +356,7 @@ Order of operation (by decreasing order of operator precedence)
 | **unary**
 | post-unary operators | `expression++`, `expression--`
 | pre-unary operators | `++expression`, `--expression`
-| other unary operators | `~`, `+`, `-`, `!`
+| other unary operators | `~`, `+`, `-`, `!`, `(type)`
 | **binary**
 | multiplication/division/modulus | `*`, `/`, `%`
 | addition/subtraction | `+`, `-`
@@ -372,6 +391,8 @@ and `String`. For `String`, only the operators `+` and `+=` can be applied
 
 ##### Numeric Promotion
 
+Applies for **binary arithmetic** operators.
+
 Numeric promotion rules:
 
 1. If two values have different data types, Java will automatically promote the
@@ -379,19 +400,23 @@ lesser to the larger of the two types.
 2. If one value is integral and the other is floating-point, Java will
 automatically promote the integral value to the floating-point's data type.
 3. Smaller data types (`byte` , `short`, and `char`) are first promoted to
-`int` any time they are used in a binary arithmetic operator (even if neither of
+`int` any time they are used in a **binary** arithmetic operator (even if neither of
 them are `int`).
 4. After all promotion has occurred and the operands have the same data type,
 the resulting value will have the same data type as its promoted operands.
 
-**Note**: Floating-point literals are `double` by default, assigning them to a
-`float` without casting gives a compile time error.
-
-Example of rule 3:
+**Note**: Rules only applies for **binary** operators, meaning that the following
+example is perfectly legal
 
 ```java
 short x = 1;
-short y = 1;
+short y = ++x; // COMPILES
+```
+However, the example below break rule 3
+
+```java
+short x = 1; // compile-time narrowing
+short y = 1; // compile-time narrowing
 short z = x*y; // DOES NOT COMPILE
 ```
 
