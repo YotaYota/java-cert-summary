@@ -1728,7 +1728,8 @@ _Java Platform Module System_ (JPMS).
 The main purpose of modules is to provide groups of related packages to offer a
 particular set of functionality to developers.
 
-_module_: a group of one or more packages and a _module-info.java_ file.
+_module_: a group of one or more packages and a _module-info.java_ file. A set of
+packages designed for reuse.
 
 Modules act as a fifth level of access control; they can expose packages within
 the modular JAR to specific other packages.
