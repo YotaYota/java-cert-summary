@@ -555,12 +555,13 @@ are the same, rather than if they are equivalent.
     - *char*, *Character*
     - *String*
     - *enum*
-    - **Note**: *double*, *float* and *long* is **not** allowed.
+    - *var* if the type resolves to one of the previous values
+    - **Note**: *boolean*, *double*, *float* and *long* is **not** allowed.
   - target variable is evaluated at runtime
   - cases needs to be compile-time constants of the same data type as the switch
   value (literals, enum constants, or final keyword).
   - omitting break statements will result in fall-through
-  - numerical promotion takes place
+  - numerical promotion that does not need explicit cast is allowed
 - *while*
 - *do-while*
   - guarantees that the statement or block is evaluated at least once
@@ -616,13 +617,40 @@ the 3 rules governing the `+` operator:
 
 Also know as *intern pool*, is located in the JVM. The string pool contains
 literal values that appear in the program.
-_object.toString()_ is a String but not a literal, hence does not go to the
-string pool. Strings not in the string pool are garbage collected as other objects.
 
-#### String
+`object.toString()` is a String but not a literal, hence does not go to the
+string pool. Strings not in the string pool are garbage collected as other objects.
 
 `new String("some string")` forces the String object to not be included in the
 string pool.
+
+- JVM reuses String literals
+
+```java
+String a = "Hello";
+String b = "Hello";
+System.out.println(a == b); // true
+```
+
+In the code below _a_ and _b_ are not the same at compile time, hence a new
+String is created for _b_.
+
+```java
+String a = "Hello";
+String b = "   Hello".trim();
+System.out.println(a == b); // false
+System.out.println(a.equals(b)); // true
+```
+
+**Note**: `intern()` method can be used to tell Java to explicitly use the String pool
+
+```java
+String s1 = "Hello";
+String s2 = new String("Hello").intern();
+System.out.println(s1 == s2); // true
+```
+
+#### String
 
 ##### Important String methods
 
@@ -672,23 +700,6 @@ initializing with String, the length of the string is added to that.
 
 ### Understanding Equality
 
-- JVM reuses String literals
-
-```java
-String a = "Hello";
-String b = "Hello";
-System.out.println(a == b); // true
-```
-
-In the code below _a_ and _b_ are not the same at compile time, hence a new
-String is created for _b_.
-
-```java
-String a = "Hello";
-String b = "   Hello".trim();
-System.out.println(a == b); // false
-System.out.println(a.equals(b)); // true
-```
 
 **Note**: If _equals()_ is not implemented, it will check for reference equality
 (as `==` does).
@@ -1312,11 +1323,13 @@ In the package `java.util.function`.
 - Override
 - Hiding
 - `final`
-- Abstract
+- `abstract`
 
 ### Classes
 
 `private` and `protected` modifiers can only be applied to inner classes.
+
+Interfaces is the only construct that adds implicit keywords.
 
 #### Constructors
 
@@ -1511,7 +1524,8 @@ interface methods.
 
 #### Interface Variables
 
-Interface variables are `public`, `static` and `final`.
+Interface variables are `public`, `static` and `final`. These are added implicitly
+if not explicitly added.
 
 ### Polymorphism
 
@@ -1706,4 +1720,66 @@ checked exception type.
 
 **Note**: Declaring a new `RunTimeException` is legal (since it's redundant;
 unchecked exceptions are not required to be declared)
+
+## Modules
+
+_Java Platform Module System_ (JPMS).
+
+The main purpose of modules is to provide groups of related packages to offer a
+particular set of functionality to developers.
+
+_module_: a group of one or more packages and a _module-info.java_ file.
+
+Modules act as a fifth level of access control; they can expose packages within
+the modular JAR to specific other packages.
+
+|command|flag|description|
+|:--|:--|:--|
+|`java`, `javac`|`-p <path>` or `--module-path <path>`| specify the module path|
+|`java`|`-m <name>` or `--module <name>`| specify the module name and class|
+
+Compile the module
+
+```sh
+javac -p mods -d classFilesDir package/name/*.java package/module-info.java
+```
+
+Running the module
+
+```sh
+java -p mods -m module.name/package.name.className
+```
+
+Packaging module
+
+```sh
+jar -cvf mods/package.name.jar -C classFilesDir/ .
+```
+
+### `module-info.java`
+
+#### `exports
+
+`exports` indicates the module is to be used by others.
+
+Can also be used to export to a specific module
+
+```java
+module package.name {
+  exports package.name to other.module;
+}
+```
+
+#### `requires`
+
+Specifies that the current module depends on the required module.
+
+`requires transitive` specifies that modules requiring the current module will also depend
+on th transitive module.
+
+```java
+module package.name {
+  requires transitive other.module;
+}
+```
 
