@@ -1733,6 +1733,14 @@ _module_: a group of one or more packages and a _module-info.java_ file.
 Modules act as a fifth level of access control; they can expose packages within
 the modular JAR to specific other packages.
 
+Advantages of JPMS include
+
+- better access control
+- clearer dependency management
+- custom runtime images
+- improved performance
+- unique package enforcement
+
 ### `module-info.java`
 
 `java.base` module is automatically added as a dependency to all modules.
