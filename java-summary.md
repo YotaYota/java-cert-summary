@@ -351,6 +351,10 @@ Three types: **unary**, **binary**, **ternary**.
 
 Order of operation (by decreasing order of operator precedence)
 
+**Note**: Not to be confused with *evaluation order*. Before applying any _operator_,
+all _operands_ must be evaluated left-to-right. There is no _operand_ order of precedence
+other than left-to-right.
+
 | Operator | Symbols and examples |
 |:---|:---|
 | **unary**
@@ -1728,29 +1732,39 @@ _Java Platform Module System_ (JPMS).
 The main purpose of modules is to provide groups of related packages to offer a
 particular set of functionality to developers.
 
-_module_: a group of one or more packages and a _module-info.java_ file. A set of
-packages designed for reuse.
+_module_: a group of one or more packages and a _module-info.java_ file.
 
 Modules act as a fifth level of access control; they can expose packages within
 the modular JAR to specific other packages.
 
-Advantages of JPMS include
+`java` and `javac` takes flag `-p <path>` or `--module-path <path>` to specify the module path.
 
-- better access control
-- clearer dependency management
-- custom runtime images
-- improved performance
-- unique package enforcement
+`java` takes flag `-m <names>` or `--module <name>` to specify module name and class.
+
+Compile the module
+
+```sh
+javac -p mods -d classFilesDir package/name/*.java package/module-info.java
+```
+
+Running the module
+
+```sh
+java -p mods -m module.name/package.name.className
+```
+
+Packaging module
+
+```sh
+jar -cvf mods/package.name.jar -C classFilesDir/ .
+```
 
 ### `module-info.java`
 
-`java.base` module is automatically added as a dependency to all modules.
+#### `exports
 
-#### `exports`
-
-`exports` indicates the module is to be used by others.
-
-Can also be used to export to a specific module
+`exports` indicates the module is to be used by others. Can be used to export to a specific
+module also
 
 ```java
 module package.name {
@@ -1769,89 +1783,5 @@ on th transitive module.
 module package.name {
   requires transitive other.module;
 }
-```
-
-### Command Line Options
-
-`javac` module commands
-
-|flag|description|
-|:--|:--|
-|`-cp <classpath>`| location of JARs in a nonmodular program|
-|`-classpath <classpath>`||
-|`--class-path <classpath>`||
-|`-d <dir>`| directory to place generated class files|
-|`-p <path>`| location of JARs in a modular program|
-|`--module-path <path>`||
-
-`java` module commands
-
-|flag|description|
-|:--|:--|
-|`-p <path>`| location of JARs in a modular program|
-|`--module-path <path>`||
-|`-m <name>`| module name to run|
-|`--module <name>`||
-|`-d`| describe details of module|
-|`--describe-module`||
-|`--list-modules`| list observable modules without running program|
-|`--show-module-resolution`| show modules when running program|
-
-`jar` module commands
-
-|flag|description|
-|:--|:--|
-|`-c`| create a new JAR file|
-|`--create`||
-|`-v`| prints details|
-|`--verbose`||
-|`-f`| JAR filename|
-|`--file`||
-|`-d`| describe details of module|
-|`--describe-module`||
-
-`jdeps` module commands
-
-|flag|description|
-|:--|:--|
-|`--module-path <path>`| location of JARs in a modular program|
-|`-s`| summarize output|
-|`-summary`||
-
-Compile the module
-
-```sh
-javac -p moduleFolderName -d directory classesToCompileIncludingModuleInfo
-```
-
-Run the module
-
-```sh
-java -p moduleFolderName -m moduleName/package.className
-```
-
-Describe a module
-
-```sh
-java -p moduleFolderName -d moduleName
-jar -f jarName -d
-```
-
-List available modules
-
-```sh
-java -p moduleFolderName --list-modules
-```
-
-View dependencies
-
-```sh
-jdeps -s --module-path moduleFolderName jarName
-```
-
-Show module resolution
-
-```sh
-java --show-module-resolution -p moduleFolderName -d moduleName
 ```
 
