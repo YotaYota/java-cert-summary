@@ -107,6 +107,8 @@ programmer's code.
 ( e.g. neither `java.nio.*.*` nor `java.nio.*.Paths` works)
 - `java.lang` is automatically imported.
 - Java automatically looks in the current package for other classes.
+- A compilation unit without package is considered an _unnamed package_, they
+cannot be reached from other packages.
 
 #### Naming conflicts
 
