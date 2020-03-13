@@ -738,6 +738,7 @@ int[] numbers = new int[2];
 int[] numbers = new int[] {42, 3, 11};
 int[] numbers = {42, 3, 11}; // shorthand notation
 ```
+**Note**: size parameter is needed if not initializing.
 
 `[]` operator can be inserted in different places
 
@@ -880,6 +881,12 @@ The methods
 returns an array either of type `Object[]` or of type `T[]`. The returned array
 will be "safe" in that no references to it are maintained by this list.
 
+#### Sorting Lists
+
+```java
+Collections.sort(list);
+```
+
 ### ArrayList
 
 ```java
@@ -888,7 +895,8 @@ import java.util.ArrayList;
 
 - Can change in size.
 - Implements the interface _List_.
-- Supports generics and refecnce variables (for primitives wrapper classes are used)
+- Supports generics and reference variables (for primitives *wrapper classes* are
+used instead)
 
 3 ways to create an _ArrayList_ including elements of _Object_ type:
 
@@ -904,6 +912,13 @@ Using generics
 List<String> list = new ArrayList<>();
 ```
 
+Using `var`
+
+```java
+var list1 = new ArrayList<String>(); // type of list one is ArrayList<String>
+var list2 = new ArrayList<>(); // type of list2 is ArrayList<Object>
+```
+
 #### Important ArrayList methods
 
 - _add()_
@@ -913,20 +928,35 @@ List<String> list = new ArrayList<>();
   - _boolean remove(Object object)_ true if a match was found.
   - _void remove(int index)_
 - _E set(int index, E newElement)_ replaces element at index
-- _isEmpty()_
-- _size()_
+- _isEmpty()_, _size()_
+  - _isEmpty()_ is true if and only if _size()_ is 0.
 - _clear()_ sets size to 0.
-- _contains()_
-- _equals()_ true if contains the same elements in the same order.
+- _contains(Object object)_
+- _boolean equals(Object object)_ true if contains the same elements in the same order.
 
 ### Wrapper Classes
 
 Primitive types have corresponding wrapper classes.
 
+Immutable.
+
 All pairs have methods on the pattern of
 
-- _Integer.parseInt()_ returns primitive type.
-- _Integer.valueOf()_ returns wrapper class.
+- `int Integer.parseInt(String string)` returns primitive type (except for `Character`).
+- `Integer Integer.valueOf(int i)` returns wrapper class
+
+**Note**: `valueOf()` is prefered over constructor since it takes advantage of caching.
+
+|Wrapper class|primitive type|
+|:--|:--|
+|`Boolean`|`boolean`|
+|`Byte`|`byte`|
+|`Short`|`short`|
+|`Integer`|`int`|
+|`Long`|`long`|
+|`Float`|`float`|
+|`Double`|`double`|
+|`Character`|`char`|
 
 **Note**: the _Character_ class does not participate in _parse/valueOf_ methods
 since _String_ is made up of multiple _char_. However, _String.valueOf()_ exists
@@ -934,7 +964,7 @@ which uses the _toString()_ method in case an object is passed.
 
 **Note**: increment and decrement operator works on wrapper classes.
 
-#### Autoboxing
+#### Autoboxing and Unboxing
 
 Since Java 5, primitive values will be automatically converted to the relevant
 wrapper classes.
@@ -942,7 +972,7 @@ wrapper classes.
 ```java
 List<Double> weights = new ArrayList<>();
 weights.add(50.5);
-weights.add(new Double(60));
+weights.add(Double.valueOf(60.2));
 ```
 
 The following code generates a _NullPointerException_ because Java tries to
@@ -951,24 +981,43 @@ convert _null_ to _int_.
 ```java
 List<Integer> numbers = new ArrayList<>();
 numbers.add(null); // Integer is not a primitive
-int n = numbers.get(0); //NullPointerException
+int n = numbers.get(0); // NullPointerException because unboxing fails
+```
+
+```java
+List<Integer> numbers = new ArrayList<>();
+numbers.add(1);
+numbers.add(2);
+numbers.remove(1); // removes INDEX 1: [1]
+numbers.add(2);
+numbers.remove(new Integer(1)); // removes OBJECT 1: [2]
 ```
 
 ### Converting Between Array and List
 
-#### List to array
+#### List to Array
+
+`toArray()` method creates a copy with no connection to the orginal list.
 
 ```java
-list.toArray() // Array with Object types
-list.toArray(new String[0]); // Array with String types (with corresponding size)
+List<String> list = new ArrayList<>();
+list.add("a string");
+Object[] arrayCopy1 = list.toArray() // Array default to Object types
+String[] arrayCopy2 = list.toArray(new String[0]); // Array with String types (with corresponding size)
+list.clear(); // does NOT affect arrayCopy1 or arrayCopy2
+System.out.println(arrayCopy1.length); // 1
 ```
 
-#### array to List
+#### Array to List
+
+There are two options: backed list or unmodifiable list.
+
+##### Backed List
 
 The original array and created array _backed List_ are linked. When change is
 made in one, it is available in the other.
 
-It is __fixed size__, we are not allowed to change the size.
+It is __fixed size__; we are not allowed to change the size.
 
 ```java
 List<String> list = Arrays.asList(array);
@@ -977,13 +1026,23 @@ list[0] = "new";
 list.remove(1); // throws UnsupportedOperationException
 ```
 
-### Sorting Lists
+**Note**: the _backed List_ is __not__ a `java.util.ArrayList`.
+
+##### Unmodifiable List
 
 ```java
-Collections.sort(list);
+Sting[] array = {"abc", "def"};
+List<String> list = List.of(array); // unmodifiable
 ```
 
-### Working with Dates and Times
+The `List.of()` method creates an unmodifiable list with the values in the array. Unmodifiable
+lists disallows `null` elements.
+
+### Set
+
+### Map
+
+### Dates and Times
 
 ```java
 import java.time.*;
