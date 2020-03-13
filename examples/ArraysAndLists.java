@@ -15,5 +15,9 @@ class ArraysAndLists {
     array1[0] = "D";
     out.println(Arrays.toString(array2));
   }
+
+  public static void notCompiles() {
+    //int[] ints = new ints[];
+  }
 }
 
