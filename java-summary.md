@@ -2,7 +2,7 @@
 
 1Z0-815
 
-## Chapter 1: Java Building Blocks
+## Java Building Blocks
 
 ### Terminology
 
@@ -337,7 +337,7 @@ finalize will run, and it wont run more than once.
 | **Simple** | Pointers and operator overloading eliminated (compared to C++).
 | **Secure** | Java code runs inside the JVM, so it is sandboxed.
 
-## Chapter 2: Operators and Statements
+## Operators and Statements
 
 | Terminology | Meaning |
 |:---|:---|
@@ -544,7 +544,7 @@ object. Two references are equal if and only if they point to the same object or
 they point to null. For objects, the equality operator is evaluating if objects
 are the same, rather than if they are equivalent.
 
-### Understanding Java Statements
+### Java Statements
 
 *Control flow statements* is the way in which Java can break up the flow of execution.
 
@@ -585,7 +585,7 @@ are the same, rather than if they are equivalent.
 
 **Note**: if no bracers is used, only the next statement is evaluated.
 
-### Understanding Advanced Flow Control
+### Advanced Flow Control
 
 A **label** is an optional pointer to the head of statement that allows the
 application flow to jump to it or break from it. It as a single word proceeded
@@ -598,17 +598,19 @@ expression that determines if the loop should continue.
 
 **Note**: label can be used in conjunction with either break or continue.
 
-## Chapter 3: Core Java APIs
+## Core Java APIs
 
 _Mutable_ : an object that is changeable.
 
 _Immutable_ : an object that can't be changed once it's created. Immutable
 classes are final, and subclasses cannot add mutable behavior.
 
-### Creating and Manipulating String
+### Creating and Manipulating Strings
 
 _String_ is immutable.
 _StringBuilder_ is mutable.
+
+They both implements the `CharSequence` interface.
 
 The `+` operator can be used in two ways within the same line of code. These are
 the 3 rules governing the `+` operator:
@@ -658,6 +660,9 @@ System.out.println(s1 == s2); // true
 
 #### String
 
+- Immutable.
+- `equals()` is implemented.
+
 ##### Important String methods
 
 **Note**: _length()_ gives length of String, but _indexOf()_ starts at 0.
@@ -672,11 +677,14 @@ System.out.println(s1 == s2); // true
 - _startsWith()_, _endsWith()_
 - _contains()_
 - _replace()_
-- _trim()_
-  - removes whitespace `\t` (tab) and `\n` (new line) from beginning and end of
-  a String.
+- _trim()_, _strip()_, _stripLeading()_, _stripTrailing()_
+  - removes whitespace `\t` (tab), `\r` (carriage return) and `\n` (new line) from
+  beginning and end of a String. _strip()_ also supports Unicode.
 
 ### StringBuilder
+
+- Mutable.
+- Does not override `equals()`, hence reference equality is default.
 
 The _StringBuilder_ methods changes its own state and returns a reference to itself.
 There are 3 ways to create a _StringBuilder_:
@@ -685,56 +693,67 @@ There are 3 ways to create a _StringBuilder_:
 - _new StringBuilder("some string");_
 - _new StringBuilder(10);_
 
-**Note**: StringBuilder does not override _equals()_, hence reference equality
-is default.
 
 **Note**: _StringBuilder_ is initialized with 16 capacity by default. When
-initializing with String, the length of the string is added to that.
+initializing with String, the length of the string is added to that. Length
+and capacity is not the same thing.
 
 #### Important StringBuilder methods
 
 - _charAt()_, _indexOf()_, _length()_, _substring()_
+    - _substring()_ returns a String rather than a StringBuilder
+  - _capacity()_
+    - different from _length()_. Stringbuilder default capacity is 16.
 - _append()_
   - _append()_ has many signatures for converting to String, e.g.
   _sb.append(true)_ appends _"true"_.
 - _insert()_
 - _delete()_, _deleteCharAt()_
+- _replace()_
+  - allows the second index to be past the end of StringBuilder.
 - _reverse()_
 - _toString()_
 
 **Note**: _StringBuffer_ has the same functionality but is thread safe.
 
-### Understanding Equality
+### Equality
 
-
-**Note**: If _equals()_ is not implemented, it will check for reference equality
+- If _equals()_ is not implemented, it will check for reference equality
 (as `==` does).
+- if `x.equals(y)` then `x.hashCode()` must equal `y.hashCode()`.
 
-**Note**: if `x.equals(y)` then `x.hashCode()` must equal `y.hashCode()`.
+### Arrays
 
-### Understanding Java Arrays
-
-```java
-import java.util.Arrays;
-```
-
+- Uses `[]` operator.
 - An array is an area of memory on the heap with space for a *fixed number* of elements.
 - An array is a *reference variable*, even if it is an array of primitives.
+- Does not override `equals()`, hence reference equality is default.
+- `length` is not a method.
+- Can contain primitives and reference variables
 
 Ways of creating an array:
+
+```java
+int[] numbers = new int[2];
+int[] numbers = new int[] {42, 3, 11};
+int[] numbers = {42, 3, 11}; // shorthand notation
+```
+
+`[]` operator can be inserted in different places
 
 ```java
 int[] numbers;
 int [] numbers;
 int numbers[];
 int numbers [];
-int[] numbers = new int[2];
-// One way of initiating with values
-int[] numbers = {42, 3, 11};
 ```
 
-**Note**: The _equals()_ method on arrays uses reference equality, it does not
-look at the elements of the array.
+**Note**: When creating multiple arrays on the same line
+
+```java
+int[] a, b; // creates TWO arrays
+int a[], b; // create ONE array, and ONE int
+```
 
 **Note**: When using array initilizer to create an array, it must be used in declaration.
 
@@ -743,33 +762,63 @@ int[] numbers;
 numbers = {42, 3, 11}; // DOES NOT COMPILE
 ```
 
+#### Arrays With Reference Variables
+
+```java
+class Names {
+  String[] names; // points to null
+}
+```
+
+```java
+class Names {
+  String[] names = new String[2]; // points to an array with 2 null elements
+}
+```
+
 #### Sorting
+
+```java
+import java.util.Arrays;
+```
 
 Use `Arrays.sort()`.
 
-**Note**: Strings sorts numbers before letters, and uppercase before lowercase.
+- Strings sorts numbers before letters, and uppercase before lowercase.
 
-#### Binary Search
+#### `Arrays.binarySearch()`
 
 ```java
 Arrays.binarySearch(numbers, 2);
 ```
 
+- Binary search can only be used on a sorted array, otherwise it is unpredictable.
 - If the element is found, binarySearch will give the index. If the element is
 not found, binarySearch will give the element where it should be inserted to
 remain sorted as _-(indexToInsertAt + 1)_ (negative for not found, and minus one
 in order to omit 0 index).
-- Binary search can only be used on a sorted array, otherwise it is unpredictable.
 
-#### Arrays.compare
+#### `Arrays.compare()`
 
-*Arrays.compare(array1, array2)* compares each element at a time.
+```java
+Arrays.compare(array1, array2)
+```
+
+Compares each element at a time.
 
 - If array1 and array2 are equal it returns 0.
 - If an element at the same postion is greater in array1, a positive number will be returned.
 - If an element at the same position is greater in array2, a negative number will be returned.
 
-### Multidimensional Arrays
+- `null` is smaller than any other value
+- numbers are smaller than letters
+- uppercase is smaller than lowercase
+
+#### `Arrays.mismatch()`
+
+Returns -1 if arrays are equal, otherwise returns the first index where they differ.
+
+#### Multidimensional Arrays
 
 Arrays that can hold other arrays. Note that the sub-arrays does not have to be
 of the same size.
@@ -783,6 +832,7 @@ int[] vars1[], vars2[][] //2D and 3D
 
 ```java
 String[][] rectangle = new String[3][2];
+int[][] different = {{1, 2}, {3}, {4, 5, 6}};
 ```
 
 Multidimensional arrays can be initialized with the **new operator** or an
@@ -790,8 +840,8 @@ Multidimensional arrays can be initialized with the **new operator** or an
 
 ```java
 int[][] ints = new int[2][2];
-int[][] ints = {{1, 2},{3, 4}};
 int[][] ints = new int[][] {{1, 2},{3, 4}};
+int[][] ints = {{1, 2},{3, 4}}; // shorthand notation
 ```
 
 **Note**: When initializing a multidimensional array, the size of the first
@@ -805,9 +855,9 @@ int[][][] ints3d = new int[][][] // DOES NOT COMPILE
 int[][][] ints3d = new int[][][3] // DOES NOT COMPILE
 ```
 
-### Understanding a List
+### List
 
-List is an interface implemented by e.g. ArrayList.
+List is an interface implemented by e.g. `ArrayList`.
 
 The static factory methods
 
@@ -816,8 +866,8 @@ The static factory methods
 
 returns an _unmodifiable_ list, with properties
 
-- Cannot add, replace or remove elements (UnsupportedOperationException).
-- Disallow `null` elements (generating NullPointerException).
+- Cannot add, replace or remove elements (`UnsupportedOperationException`).
+- Disallow `null` elements (generating `NullPointerException`).
 - Serializable if all elements are.
 - Identity-based operations are unstable and should be avoided (`==`, hash code,
 synchronization).
@@ -830,15 +880,15 @@ The methods
 returns an array either of type `Object[]` or of type `T[]`. The returned array
 will be "safe" in that no references to it are maintained by this list.
 
-### Understanding an ArrayList
+### ArrayList
 
 ```java
 import java.util.ArrayList;
 ```
 
-_ArrayList_ can change in size.
-
-Implements the interface _List_.
+- Can change in size.
+- Implements the interface _List_.
+- Supports generics and refecnce variables (for primitives wrapper classes are used)
 
 3 ways to create an _ArrayList_ including elements of _Object_ type:
 
@@ -1041,7 +1091,7 @@ LocalDate.parse("01 02 2015", f);
 LocalTime.parse("11:22"); // Uses default parser
 ```
 
-## Chapter 4: Methods and Encapsulation
+## Methods and Encapsulation
 
 ```java
 public final void nap(int minutes) throws InterruptedException {}
@@ -1323,7 +1373,7 @@ Java doesn't allow us to redeclare local variables in lambdas
 In the package `java.util.function`.
 *ArrayList* declares `removeIf()` that takes a `Predicate`.
 
-## Chapter 5: Class Design
+## Class Design
 
 - Inheritance
 - Override
@@ -1579,7 +1629,7 @@ since they can be overridden at runtime.
 
 The ability to pass instances of a subclass or interface to a method.
 
-## Chapter 6: Exceptions
+## Exceptions
 
 An Exception is an event that alters the program flow.
 
