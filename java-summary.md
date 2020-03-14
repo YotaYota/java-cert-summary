@@ -1929,3 +1929,87 @@ module package.name {
 }
 ```
 
+### Command Line Options
+
+`javac` module commands
+
+|flag|description|
+|:--|:--|
+|`-cp <classpath>`| location of JARs in a nonmodular program|
+|`-classpath <classpath>`||
+|`--class-path <classpath>`||
+|`-d <dir>`| directory to place generated class files|
+|`-p <path>`| location of JARs in a modular program|
+|`--module-path <path>`||
+
+`java` module commands
+
+|flag|description|
+|:--|:--|
+|`-p <path>`| location of JARs in a modular program|
+|`--module-path <path>`||
+|`-m <name>`| module name to run|
+|`--module <name>`||
+|`-d`| describe details of module|
+|`--describe-module`||
+|`--list-modules`| list observable modules without running program|
+|`--show-module-resolution`| show modules when running program|
+
+`jar` module commands
+
+|flag|description|
+|:--|:--|
+|`-c`| create a new JAR file|
+|`--create`||
+|`-v`| prints details|
+|`--verbose`||
+|`-f`| JAR filename|
+|`--file`||
+|`-d`| describe details of module|
+|`--describe-module`||
+
+`jdeps` module commands
+
+|flag|description|
+|:--|:--|
+|`--module-path <path>`| location of JARs in a modular program|
+|`-s`| summarize output|
+|`-summary`||
+
+Compile the module
+
+```sh
+javac -p moduleFolderName -d directory classesToCompileIncludingModuleInfo
+```
+
+Run the module
+
+```sh
+java -p moduleFolderName -m moduleName/package.className
+```
+
+Describe a module
+
+```sh
+java -p moduleFolderName -d moduleName
+jar -f jarName -d
+```
+
+List available modules
+
+```sh
+java -p moduleFolderName --list-modules
+```
+
+View dependencies
+
+```sh
+jdeps -s --module-path moduleFolderName jarName
+```
+
+Show module resolution
+
+```sh
+java --show-module-resolution -p moduleFolderName -d moduleName
+```
+
