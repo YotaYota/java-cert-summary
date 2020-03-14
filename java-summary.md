@@ -1040,7 +1040,40 @@ lists disallows `null` elements.
 
 ### Set
 
+- Cannot contain duplicates.
+- Unordered.
+- `HashSet`, `TreeSet`.
+
+- _boolean add()_ returns `true` if added, `false` otherwise.
+
 ### Map
+
+- Key/value pairs.
+- `HashMap`.
+
+|method|description|
+|:--|:--|
+|`V get(Object key)`|returns value mapped by key or `null` if none is mapped|
+|`V getOrDefault(Object key, V other)`|returns value mapped by key or other if none is mapped|
+|`V puy(K key, V value)`|adds or replaces key/value pair. Returns previous value or `null`|
+|`V remove(Object key)`|removes and returns value. `null` if none|
+|`boolean containsKey(Object key)`||
+|`boolean containsValue(Object value)`||
+|`Set<K> keySet()`|Returns set of all keys|
+|`Collection<V> values()`|Returns `Collection` of all values|
+
+### Math
+
+|method|description|
+|:--|:--|
+|`double min(double a, double b)`||
+|`float`, `int`, `long`||
+|`double max(double a, double b)`||
+|`float`, `int`, `long`||
+|`long round(double num)`|round numer to `long`|
+|`int round(float num)`|round number to `int`|
+|`double pow(double number, double exponent)`||
+|`double random()`|returns number greater or equal to 0 and strictly less than 1|
 
 ### Dates and Times
 
