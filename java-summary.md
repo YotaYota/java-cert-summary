@@ -1055,7 +1055,7 @@ lists disallows `null` elements.
 |:--|:--|
 |`V get(Object key)`|returns value mapped by key or `null` if none is mapped|
 |`V getOrDefault(Object key, V other)`|returns value mapped by key or other if none is mapped|
-|`V puy(K key, V value)`|adds or replaces key/value pair. Returns previous value or `null`|
+|`V put(K key, V value)`|adds or replaces key/value pair. Returns previous value or `null`|
 |`V remove(Object key)`|removes and returns value. `null` if none|
 |`boolean containsKey(Object key)`||
 |`boolean containsValue(Object value)`||
@@ -1081,8 +1081,8 @@ lists disallows `null` elements.
 import java.time.*;
 ```
 
-- Static classes. `new` keyword is not allowed.
-- Created object is immutable.
+- Static classes (`new` keyword is not allowed)
+- Created object is immutable
 
 |||
 |:---|:---|
