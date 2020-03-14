@@ -1905,7 +1905,7 @@ jar -cvf mods/package.name.jar -C classFilesDir/ .
 
 ### `module-info.java`
 
-#### `exports
+#### `exports`
 
 `exports` indicates the module is to be used by others. Can be used to export to a specific
 module also
