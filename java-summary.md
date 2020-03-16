@@ -1472,12 +1472,12 @@ it is explicitly marked as `final`.
 
 #### Functional Interfaces
 
-|Functional Interface|method|
-|:--|:--|
-|Predicate|`boolean test(T t)`|
-|Consumer|`void accept(T t)`|
-|Supplier|`T get()`|
-|Comparator|`int compate(T o1, T o2)`|
+|Functional Interface|method|example|
+|:--|:--|:--|
+|Predicate|`boolean test(T t)`|`removeIf()` in a `List` or `Set`|
+|Consumer|`void accept(T t)`|`forEach()` in a `List`, `Set` or `Map`|
+|Supplier|`T get()`||
+|Comparator|`int compate(T o1, T o2)`|`sort()` in a `List`|
 
 ##### Predicate
 
