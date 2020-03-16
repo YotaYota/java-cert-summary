@@ -575,9 +575,9 @@ are the same, rather than if they are equivalent.
   - *for(initialization; booleanExpression; updateStatement)  {};*
   - initialization and update sections may contain multiple statements,
   separated by commas
-    - note that multiple assignments is not consistent with normal multiple assignment:
+    - **Note**: multiple assignments is not consistent with normal multiple assignment:
       - `x = 0, y = 0` is OK in for loops, but not otherwise.
-      - assigning values to variables of different types is OK in for loops, but
+      - Assigning values to variables of different types is OK in for loops, but
       not otherwise.
 - *for-each*
   - right-hand side of the for-each loop statement must be a built in array or
@@ -677,7 +677,9 @@ System.out.println(s1 == s2); // true
 - _equals()_, _equalsIgnoreCase()_
 - _startsWith()_, _endsWith()_
 - _contains()_
-- _replace()_
+- _replace()_, _replaceAll()_
+  - If the char/String/regex is not included as parameter, these method return a reference
+  to itself.
 - _trim()_, _strip()_, _stripLeading()_, _stripTrailing()_
   - removes whitespace `\t` (tab), `\r` (carriage return) and `\n` (new line) from
   beginning and end of a String. _strip()_ also supports Unicode.
@@ -930,7 +932,7 @@ var list2 = new ArrayList<>(); // type of list2 is ArrayList<Object>
   - _void add(int index, E element)_
 - _remove()_
   - _boolean remove(Object object)_ true if a match was found.
-  - _void remove(int index)_
+  - _E remove(int index)_ removes object and returns it
 - _E set(int index, E newElement)_ replaces element at index
 - _isEmpty()_, _size()_
   - _isEmpty()_ is true if and only if _size()_ is 0.
