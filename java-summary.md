@@ -661,6 +661,7 @@ System.out.println(s1 == s2); // true
 #### String
 
 - Immutable.
+- Implements _Serializable_, _CharSequence_, _Comparable<String>_.
 - `equals()` is implemented.
 
 ##### Important String methods
@@ -684,6 +685,7 @@ System.out.println(s1 == s2); // true
 ### StringBuilder
 
 - Mutable.
+- Implements _Serializable_, _Appendable_, _CharSequence_, _Comparable<StringBuilder>_.
 - Does not override `equals()`, hence reference equality is default.
 
 The _StringBuilder_ methods changes its own state and returns a reference to itself.
@@ -703,7 +705,7 @@ and capacity is not the same thing.
 - _charAt()_, _indexOf()_, _length()_, _substring()_
     - _substring()_ returns a String rather than a StringBuilder
   - _capacity()_
-    - different from _length()_. Stringbuilder default capacity is 16.
+    - different from _length()_. StringBuilder default capacity is 16.
 - _append()_
   - _append()_ has many signatures for converting to String, e.g.
   _sb.append(true)_ appends _"true"_.
@@ -858,6 +860,8 @@ int[][][] ints3d = new int[][][3] // DOES NOT COMPILE
 
 ### List
 
+- Implements _Iterable<E>_, _Collection<E>_.
+
 List is an interface implemented by e.g. `ArrayList`.
 
 The static factory methods
@@ -894,7 +898,7 @@ import java.util.ArrayList;
 ```
 
 - Can change in size.
-- Implements the interface _List_.
+- Implements _Serializable_, _Cloneable_, _Iterable<E>_, _Collection<E>_, _RandomAccess_
 - Supports generics and reference variables (for primitives *wrapper classes* are
 used instead)
 
