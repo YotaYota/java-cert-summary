@@ -1433,21 +1433,17 @@ Immutability refers to preventing callers from changing the instance variables.
 Encapsulation refers to preventing callers from changing the instance variables
 directly.
 
-### Writing Simple Lambdas
+### Lambdas and Functional Interfaces
 
-A *lambda expression* is a block of code that is passed around.
-*Deferred execution* means the code is specified now but will be run later.
+- A *lambda expression* is a block of code that is passed around.
+- *Deferred execution* means the code is specified now but will be run later.
+- Lambdas work with interfaces that have *only one* abstract method, called *Functional Interfaces*.
 
-Lambda syntax
+#### Lambda syntax
 
 ```java
 a -> a.canHop()
-```
-
-Including optional parts
-
-```java
-(Animal a) -> {return a.canHop(); }
+(Animal a) -> {return a.canHop(); } // including optional parts
 ```
 
 - Parenthesis can be omitted when there is a single parameter with no explicit type.
@@ -1460,7 +1456,30 @@ Java doesn't allow us to redeclare local variables in lambdas
 (a, b) -> {int a = 0; return 5;} // DOES NOT COMPILE
 ```
 
-#### Predicate
+#### Variable Accessability in Lambda Body
+
+Method parameters and local variables are allowed to be referenced if they are *effectively final*.
+This means that the value of the variable doesn't change after it is set, regardless of whether
+it is explicitly marked as `final`.
+
+|variable type|rule|
+|:--|:--|
+|instance variable|allowed|
+|static variable|allowed|
+|local variable|allowed if effectively final|
+|method parameter|allowed if effectively final|
+|lambda parameter|allowed|
+
+#### Functional Interfaces
+
+|Functional Interface|method|
+|:--|:--|
+|Predicate|`boolean test(T t)`|
+|Consumer|`void accept(T t)`|
+|Supplier|`T get()`|
+|Comparator|`int compate(T o1, T o2)`|
+
+##### Predicate
 
 In the package `java.util.function`.
 *ArrayList* declares `removeIf()` that takes a `Predicate`.
