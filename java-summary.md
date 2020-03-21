@@ -46,7 +46,7 @@
 
 ### Running and Compiling
 
-Java files are compiles with `javac` command. `java` is used to run a *.class* file.
+Java files are compiled with `javac` command. `java` is used to run a *.class* file.
 
 - `-d` flag can be used to put generated *.class* files in a target directory.
 - `-cp`, `-classpath` or `--class-path` can be used to specify the classpath.
@@ -637,6 +637,15 @@ string pool.
 ```java
 String a = "Hello";
 String b = "Hello";
+System.out.println(a == b); // true
+```
+
+String literal concatenation is computed at compile time and hence also
+added to the String Pool
+
+```java
+String a = "Hello";
+String b = "Hel" + "lo";
 System.out.println(a == b); // true
 ```
 
@@ -1448,8 +1457,8 @@ directly.
 #### Lambda syntax
 
 ```java
-a -> a.canHop()
-(Animal a) -> {return a.canHop(); } // including optional parts
+(Animal a) -> { return a.canHop(); }
+a -> a.canHop() // shorthand notation
 ```
 
 - Parenthesis can be omitted when there is a single parameter with no explicit type.
@@ -1500,6 +1509,7 @@ In the package `java.util.function`.
 
 ### Classes
 
+Top level classes can have `public` or _package private_ modifier.
 `private` and `protected` modifiers can only be applied to inner classes.
 
 Interfaces is the only construct that adds implicit keywords.
@@ -1536,8 +1546,8 @@ The parent constructor is always executed before the child constructor.
 
 ##### Overriding a Method
 
-Methods can be overridden by declaring a new method with the same signature and
-return type as in the child class.
+Non-static methods can be overridden by declaring a new method with the same signature and
+return type as in the parent class.
 
 Overriding is performed at runtime, meaning that which method is called is
 decided by the object being referred to (not the type of the reference variable).
@@ -1777,7 +1787,7 @@ Common errors:
 
 ### Exceptions
 
-A `RunTimeException` and its subclasses is also known as an _unchecked exception_.
+A `RunTimeException` and any subclasse is also known as an _unchecked exception_.
 
 An `Exception` (but not a `RunTimeException`) is also known as an _checked exception_.
 
@@ -1810,7 +1820,7 @@ Common checked exceptions:
 
 #### Unchecked Exceptions (`RunTimeException`)
 
-Common unchcked exceptions:
+Common unchecked exceptions:
 
 |**Exception**|**Thrown by**||
 |:--|:--|:--|
@@ -1840,11 +1850,10 @@ try {
 }
 ```
 
-**Note**: A `try` statement requires `catch` and/or `finally`. Both is not
+- A `try` statement requires `catch` and/or `finally`. Both is not
 required, but `catch` is required to come before `finally`.
-
-**Note**: Code in `finally` always executes, regardless of wether an exception
-was thrown. If no exeption is thrown, the `finally` clasue is run after the
+- Code in `finally` always executes, regardless of wether an exception
+was thrown. If no exeption is thrown, the `finally` clause is run after the
 `try` clause. If the an exception is thrown, the `finally` clause is run after
 the `catch` clause.
 
@@ -1886,7 +1895,7 @@ catch (Exception | IOException e) { // DOES NOT COMPILE
 When implementing or overriding methods, it is not allowed to add new checked
 exceptions to the method signature.
 
-A subclass is allowed to declare fewer exception that the superclass or interface.
+A subclass is allowed to declare fewer exceptions than the superclass or interface.
 
 An overridden or implemented methods is allowed to declare a subclass of a
 checked exception type.
@@ -1946,7 +1955,7 @@ module package.name {
 Specifies that the current module depends on the required module.
 
 `requires transitive` specifies that modules requiring the current module will also depend
-on th transitive module.
+on the transitive module.
 
 ```java
 module package.name {
